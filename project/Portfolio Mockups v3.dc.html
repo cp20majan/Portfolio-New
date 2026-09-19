@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet data-dc-atomics="">
+<meta name="design_doc_mode" content="canvas">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&amp;family=JetBrains+Mono:wght@400;500;700&amp;display=swap" rel="stylesheet">
+<script src="./image-slot.js"></script>
+<style>
+body{margin:0;background:#e6e3da;font-family:"JetBrains Mono",ui-monospace,monospace}
+a{color:#b8331c;text-decoration:none}
+a:hover{color:#b8331c}
+</style>
+</helmet>
+
+<section style="padding:44px 48px 40px">
+  <div style="display:flex;align-items:baseline;gap:10px;margin:0 0 6px">
+    <a href="#t3" style="font:700 10px 'JetBrains Mono',monospace;padding:3px 7px;background:#17160f;color:#f4f2ec;border-radius:2px">3</a>
+    <span style="font:700 13px/1.2 'JetBrains Mono',monospace;color:#17160f">BRIGHT — paper ground, admin-gated uploads</span>
+  </div>
+  <p style="max-width:700px;margin:0 0 20px;font:400 12px/1.7 'JetBrains Mono',monospace;color:#6e6b60">
+    Warm paper, black ink, one vermilion signal. Instrument Serif for the big editorial type against JetBrains Mono for everything functional. <b style="color:#17160f">Uploading is admin-only</b> — flip the switch below and every upload affordance, draft entry and edit control appears or disappears across all four frames.
+  </p>
+
+  <div style="display:inline-flex;align-items:center;gap:12px;margin-bottom:30px;background:#f4f2ec;border:1px solid rgba(23,22,15,.16);padding:9px 12px">
+    <span style="font:500 10px 'JetBrains Mono',monospace;letter-spacing:.16em;color:#6e6b60">VIEWING AS</span>
+    <div style="display:flex;gap:1px;background:rgba(23,22,15,.16);border:1px solid rgba(23,22,15,.16)">
+      <button onClick="{{ beVisitor }}" style="border:0;cursor:pointer;padding:7px 14px;font:700 10.5px 'JetBrains Mono',monospace;letter-spacing:.1em;background:{{ visBg }};color:{{ visFg }}">VISITOR</button>
+      <button onClick="{{ beAdmin }}" style="border:0;cursor:pointer;padding:7px 14px;font:700 10.5px 'JetBrains Mono',monospace;letter-spacing:.1em;background:{{ admBg }};color:{{ admFg }}">ADMIN</button>
+    </div>
+  </div>
+
+  <div style="display:flex;flex-wrap:wrap;gap:36px;align-items:flex-start">
+
+    <div id="3a" style="display:flex;flex-direction:column;gap:10px">
+      <div style="display:flex;align-items:baseline;gap:8px;font:400 11px/1.3 'JetBrains Mono',monospace;color:#6e6b60">
+        <a href="#3a" style="font:700 10.5px 'JetBrains Mono',monospace;padding:3px 7px;background:rgba(23,22,15,.1);color:#17160f;border-radius:2px">3a</a>
+        WORK — same page, both roles
+      </div>
+      <div style="width:1280px;max-width:100%;background:#f4f2ec;border:1px solid rgba(23,22,15,.16)">
+        <sc-if value="{{ isAdmin }}" hint-placeholder-val="{{ false }}">
+          <div style="display:flex;align-items:center;justify-content:space-between;background:#17160f;padding:9px 24px">
+            <span style="font:500 10px 'JetBrains Mono',monospace;letter-spacing:.16em;color:#a8a49a">ADMIN SESSION · cp@majan.dev · ROLE ACCESS ADMIN</span>
+            <span style="display:flex;gap:18px;font:500 10px 'JetBrains Mono',monospace;letter-spacing:.12em;color:#f4f2ec"><span>DRAFTS 1</span><span>STORAGE 3.4 GB</span><span style="color:#b8331c">SIGN OUT</span></span>
+          </div>
+        </sc-if>
+
+        <div style="display:flex;justify-content:space-between;align-items:center;padding:20px 24px;border-bottom:1px solid rgba(23,22,15,.16)">
+          <span style="font:400 24px 'Instrument Serif',serif;color:#17160f">CP Majan</span>
+          <div style="display:flex;gap:24px;font:500 11px 'JetBrains Mono',monospace;letter-spacing:.1em;color:#6e6b60">
+            <span style="color:#17160f;border-bottom:2px solid #dd4327;padding-bottom:2px">WORK</span><span>LAB</span><span>ABOUT</span><span>CONTACT</span>
+          </div>
+          <sc-if value="{{ isAdmin }}" hint-placeholder-val="{{ false }}">
+            <span style="display:flex;align-items:center;gap:8px;background:#dd4327;color:#f4f2ec;padding:9px 15px;font:700 10.5px 'JetBrains Mono',monospace;letter-spacing:.1em">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#f4f2ec" stroke-width="2.6" stroke-linecap="round"><path d="M12 19V5M5 12l7-7 7 7"></path></svg>NEW ENTRY
+            </span>
+          </sc-if>
+          <sc-if value="{{ isVisitor }}" hint-placeholder-val="{{ true }}">
+            <span style="font:500 10.5px 'JetBrains Mono',monospace;letter-spacing:.1em;color:#6e6b60;border-bottom:1px solid rgba(23,22,15,.3);padding-bottom:2px">SIGN IN</span>
+          </sc-if>
+        </div>
+
+        <div style="display:grid;grid-template-columns:1.25fr 1fr;border-bottom:1px solid rgba(23,22,15,.16)">
+          <div style="padding:46px 24px 40px;border-right:1px solid rgba(23,22,15,.16)">
+            <div style="font:500 10px 'JetBrains Mono',monospace;letter-spacing:.2em;color:#6e6b60;margin-bottom:18px">{{ countLabel }}</div>
+            <h1 style="font:400 76px/.92 'Instrument Serif',serif;color:#17160f;margin:0 0 18px;letter-spacing:-.01em">Industrial networks<br>&amp; <i style="color:#dd4327">synthetic footage</i></h1>
+            <p style="max-width:470px;margin:0;font:400 12px/1.9 'JetBrains Mono',monospace;color:#6e6b60">OT/IT network design, ICS security and automation coursework — each entry published with a recorded walkthrough.</p>
+          </div>
+          <div style="padding:24px;display:flex;flex-direction:column;justify-content:center;gap:14px">
+            <sc-if value="{{ isAdmin }}" hint-placeholder-val="{{ false }}">
+              <div style="position:relative;border:1px dashed rgba(221,67,39,.55);background:rgba(221,67,39,.05);padding:30px 20px;text-align:center">
+                <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#dd4327" stroke-width="1.6" stroke-linejoin="round" style="margin-bottom:11px"><rect x="2.5" y="5.5" width="13" height="13"></rect><path d="M15.5 10.5l6-3.4v9.8l-6-3.4z"></path></svg>
+                <div style="font:400 22px 'Instrument Serif',serif;color:#17160f">Drop footage to start an entry</div>
+                <div style="font:400 10px 'JetBrains Mono',monospace;letter-spacing:.1em;color:#6e6b60;margin-top:7px">MP4 · MOV · WEBM — UP TO 2 GB</div>
+              </div>
+            </sc-if>
+            <div style="display:flex;gap:8px;flex-wrap:wrap">
+              <sc-for list="{{ tracks }}" as="t" hint-placeholder-count="3">
+                <button onClick="{{ t.onClick }}" style="flex:none;white-space:nowrap;border:1px solid {{ t.bd }};background:{{ t.bg }};color:{{ t.fg }};padding:9px 14px;font:700 10.5px 'JetBrains Mono',monospace;letter-spacing:.1em;cursor:pointer;display:flex;gap:9px;align-items:center">
+                  {{ t.label }}<span style="opacity:.55;font-weight:400">{{ t.count }}</span>
+                </button>
+              </sc-for>
+            </div>
+            <div style="font:400 10.5px/1.8 'JetBrains Mono',monospace;color:#5f5c52">{{ gateNote }}</div>
+          </div>
+        </div>
+
+        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:rgba(23,22,15,.16)">
+          <sc-for list="{{ shown }}" as="p" hint-placeholder-count="6">
+            <article onMouseEnter="{{ p.onEnter }}" onMouseLeave="{{ p.onLeave }}" style="background:#f4f2ec;cursor:pointer">
+              <div style="position:relative;height:190px;background:#e3e0d6">
+                <image-slot id="{{ p.slotId }}" shape="rect" placeholder="Drop a frame"></image-slot>
+                <div style="position:absolute;left:0;bottom:0;pointer-events:none;width:42px;height:42px;background:#17160f;display:flex;align-items:center;justify-content:center">
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="#f4f2ec"><path d="M9 5.5v13l10-6.5z"></path></svg>
+                </div>
+                <span style="position:absolute;right:10px;bottom:10px;pointer-events:none;background:#17160f;color:#f4f2ec;padding:2px 7px;font:500 10px 'JetBrains Mono',monospace">{{ p.dur }}</span>
+                <sc-if value="{{ p.showDraft }}" hint-placeholder-val="{{ false }}">
+                  <span style="position:absolute;right:10px;top:10px;pointer-events:none;background:#dd4327;color:#f4f2ec;padding:3px 8px;font:700 9.5px 'JetBrains Mono',monospace;letter-spacing:.12em">DRAFT</span>
+                </sc-if>
+                <sc-if value="{{ p.showEdit }}" hint-placeholder-val="{{ false }}">
+                  <span style="position:absolute;left:10px;top:10px;background:#f4f2ec;border:1px solid rgba(23,22,15,.2);color:#17160f;padding:4px 9px;font:700 9.5px 'JetBrains Mono',monospace;letter-spacing:.1em">EDIT</span>
+                </sc-if>
+              </div>
+              <div style="padding:16px 18px 20px">
+                <div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:9px">
+                  <span style="font:700 9.5px 'JetBrains Mono',monospace;letter-spacing:.14em;color:{{ p.kindFg }}">{{ p.kindLabel }}</span>
+                  <span style="font:400 10px 'JetBrains Mono',monospace;color:#5f5c52">{{ p.num }}</span>
+                </div>
+                <h3 style="font:400 26px/1.1 'Instrument Serif',serif;color:#17160f;margin:0 0 8px">{{ p.title }}</h3>
+                <p style="font:400 10.5px/1.8 'JetBrains Mono',monospace;color:#6e6b60;margin:0">{{ p.desc }}</p>
+              </div>
+            </article>
+          </sc-for>
+        </div>
+      </div>
+    </div>
+
+    <div id="3b" style="display:flex;flex-direction:column;gap:10px">
+      
+      <div style="width:680px;max-width:100%;background:#f4f2ec;border:1px solid rgba(23,22,15,.16)">
+        
+
+        <sc-if value="{{ isVisitor }}" hint-placeholder-val="{{ true }}">
+          <div style="padding:56px 30px;text-align:center">
+            <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#17160f" stroke-width="1.5" style="margin-bottom:18px"><rect x="4" y="10.5" width="16" height="10.5"></rect><path d="M8 10.5V7a4 4 0 018 0v3.5"></path></svg>
+            <div style="font:400 30px/1.15 'Instrument Serif',serif;color:#17160f;margin-bottom:10px">Uploading is admin&nbsp;only</div>
+            <p style="max-width:380px;margin:0 auto 22px;font:400 11px/1.9 'JetBrains Mono',monospace;color:#6e6b60">Visitors can watch and read every published entry. Creating, editing and publishing require the admin role.</p>
+            <button onClick="{{ beAdmin }}" style="background:#17160f;color:#f4f2ec;border:0;padding:11px 20px;font:700 10.5px 'JetBrains Mono',monospace;letter-spacing:.1em;cursor:pointer">SIGN IN AS ADMIN</button>
+          </div>
+        </sc-if>
+
+        <sc-if value="{{ isAdmin }}" hint-placeholder-val="{{ false }}">
+          
+        </sc-if>
+      </div>
+    </div>
+
+    <div id="3c" style="display:flex;flex-direction:column;gap:10px">
+      <div style="display:flex;align-items:baseline;gap:8px;font:400 11px/1.3 'JetBrains Mono',monospace;color:#6e6b60">
+        <a href="#3c" style="font:700 10.5px 'JetBrains Mono',monospace;padding:3px 7px;background:rgba(23,22,15,.1);color:#17160f;border-radius:2px">3c</a>
+        ENTRY — case study
+      </div>
+      <div style="width:1000px;max-width:100%;background:#f4f2ec;border:1px solid rgba(23,22,15,.16)">
+        <div style="display:grid;grid-template-columns:1fr 330px;border-bottom:1px solid rgba(23,22,15,.16)">
+          <div style="padding:38px 26px 30px">
+            <div style="font:500 10px 'JetBrains Mono',monospace;letter-spacing:.18em;color:#b8331c;margin-bottom:14px">ENTRY 01 · GNS3 · OT SECURITY · VLAN</div>
+            <h1 style="font:400 58px/.98 'Instrument Serif',serif;color:#17160f;margin:0 0 16px">GNS3 Industrial Network</h1>
+            <p style="max-width:560px;margin:0;font:400 12.5px/1.95 'JetBrains Mono',monospace;color:#6e6b60">A multi-site OT/IT topology simulating a pumping station and its corporate uplink — segmented VLANs, a DMZ for historian traffic, and a hardened jump host for remote engineering access.</p>
+          </div>
+          <div style="border-left:1px solid rgba(23,22,15,.16);padding:26px 22px">
+            <div style="font:500 10px 'JetBrains Mono',monospace;letter-spacing:.18em;color:#5f5c52;margin-bottom:12px">SPEC</div>
+            <sc-for list="{{ spec }}" as="s" hint-placeholder-count="4">
+              <div style="display:flex;justify-content:space-between;gap:14px;font:400 11px 'JetBrains Mono',monospace;border-bottom:1px solid rgba(23,22,15,.1);padding:8px 0">
+                <span style="color:#5f5c52">{{ s.k }}</span><span style="color:#17160f;text-align:right">{{ s.v }}</span>
+              </div>
+            </sc-for>
+            <sc-if value="{{ isAdmin }}" hint-placeholder-val="{{ false }}">
+              <div style="display:flex;gap:6px;margin-top:16px">
+                <span style="flex:1;text-align:center;border:1px solid rgba(23,22,15,.22);color:#17160f;padding:9px 0;font:700 9.5px 'JetBrains Mono',monospace;letter-spacing:.1em">EDIT</span>
+                <span style="flex:1;text-align:center;background:#dd4327;color:#f4f2ec;padding:9px 0;font:700 9.5px 'JetBrains Mono',monospace;letter-spacing:.1em">UNPUBLISH</span>
+              </div>
+            </sc-if>
+          </div>
+        </div>
+
+        <div style="position:relative;height:420px;background:#e3e0d6;border-bottom:1px solid rgba(23,22,15,.16)">
+          <image-slot id="v3-hero" shape="rect" placeholder="Drop the hero frame"></image-slot>
+          <div style="position:absolute;left:0;right:0;bottom:0;pointer-events:none;padding:13px 22px;background:#17160f;display:flex;align-items:center;gap:16px">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="#f4f2ec"><path d="M9 5.5v13l10-6.5z"></path></svg>
+            <div style="flex:1;height:2px;background:rgba(244,242,236,.25);position:relative">
+              <div style="position:absolute;left:0;top:0;bottom:0;width:34%;background:#dd4327"></div>
+              <div style="position:absolute;left:34%;top:-4px;width:2px;height:10px;background:#dd4327"></div>
+            </div>
+            <span style="font:500 10.5px 'JetBrains Mono',monospace;color:#f4f2ec">02:11 / 06:24</span>
+          </div>
+        </div>
+
+        <div style="display:grid;grid-template-columns:1.5fr 1fr">
+          <div style="padding:28px 26px 34px;border-right:1px solid rgba(23,22,15,.16)">
+            <div style="font:500 10px 'JetBrains Mono',monospace;letter-spacing:.18em;color:#5f5c52;margin-bottom:12px">CHAPTERS</div>
+            <sc-for list="{{ chapters }}" as="c" hint-placeholder-count="3">
+              <div style="display:grid;grid-template-columns:62px 1fr;gap:16px;padding:12px 0;border-top:1px solid rgba(23,22,15,.1)">
+                <span style="font:500 11px 'JetBrains Mono',monospace;color:#b8331c">{{ c.t }}</span>
+                <span style="font:400 12px/1.7 'JetBrains Mono',monospace;color:#17160f">{{ c.label }}</span>
+              </div>
+            </sc-for>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:1px;background:rgba(23,22,15,.16);border:1px solid rgba(23,22,15,.16);margin-top:24px">
+              <div style="height:140px;background:#e3e0d6"><image-slot id="v3-still-1" shape="rect" placeholder="Topology"></image-slot></div>
+              <div style="height:140px;background:#e3e0d6"><image-slot id="v3-still-2" shape="rect" placeholder="Capture"></image-slot></div>
+            </div>
+          </div>
+          <div style="padding:28px 24px">
+            <div style="font:500 10px 'JetBrains Mono',monospace;letter-spacing:.18em;color:#5f5c52;margin-bottom:12px">FILES</div>
+            <div style="display:flex;flex-direction:column;gap:7px">
+              <span style="display:flex;align-items:center;gap:9px;border:1px solid rgba(23,22,15,.18);color:#17160f;padding:10px 12px;font:400 10.5px 'JetBrains Mono',monospace">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#dd4327" stroke-width="1.8" stroke-linejoin="round"><path d="M13 2.5H6.5A1.5 1.5 0 005 4v16a1.5 1.5 0 001.5 1.5h11A1.5 1.5 0 0019 20V8.5z"></path><path d="M13 2.5V8.5H19"></path></svg>
+                topology-report.pdf<span style="margin-left:auto;color:#5f5c52">2.1 MB</span>
+              </span>
+              <span style="display:flex;align-items:center;gap:9px;border:1px solid rgba(23,22,15,.18);color:#17160f;padding:10px 12px;font:400 10.5px 'JetBrains Mono',monospace">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#dd4327" stroke-width="1.8" stroke-linejoin="round"><path d="M13 2.5H6.5A1.5 1.5 0 005 4v16a1.5 1.5 0 001.5 1.5h11A1.5 1.5 0 0019 20V8.5z"></path><path d="M13 2.5V8.5H19"></path></svg>
+                lab.gns3project<span style="margin-left:auto;color:#5f5c52">840 KB</span>
+              </span>
+            </div>
+            <div style="margin-top:22px;border:1px solid rgba(23,22,15,.16);padding:16px">
+              <div style="font:400 20px 'Instrument Serif',serif;color:#17160f;margin-bottom:6px">Next entry</div>
+              <p style="font:400 10.5px/1.8 'JetBrains Mono',monospace;color:#6e6b60;margin:0 0 10px">SCADA Hardening — 04:02</p>
+              <span style="font:700 9.5px 'JetBrains Mono',monospace;letter-spacing:.12em;color:#b8331c">CONTINUE →</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="3d" style="display:flex;flex-direction:column;gap:10px">
+      <div style="display:flex;align-items:baseline;gap:8px;font:400 11px/1.3 'JetBrains Mono',monospace;color:#6e6b60">
+        <a href="#3d" style="font:700 10.5px 'JetBrains Mono',monospace;padding:3px 7px;background:rgba(23,22,15,.1);color:#17160f;border-radius:2px">3d</a>
+        MOBILE — public feed, admin sheet
+      </div>
+      <div style="display:flex;gap:22px">
+        <div style="width:390px;border:9px solid #17160f;border-radius:30px;overflow:hidden;background:#f4f2ec">
+          <div style="display:flex;justify-content:space-between;padding:10px 20px 6px;font:700 11px 'JetBrains Mono',monospace;color:#17160f"><span>9:41</span><span>▮▮▮</span></div>
+          <div style="display:flex;justify-content:space-between;align-items:center;padding:8px 18px 14px;border-bottom:1px solid rgba(23,22,15,.16)">
+            <span style="font:400 21px 'Instrument Serif',serif;color:#17160f">CP Majan</span>
+            <sc-if value="{{ isAdmin }}" hint-placeholder-val="{{ false }}">
+              <span style="background:#dd4327;width:30px;height:30px;display:flex;align-items:center;justify-content:center">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#f4f2ec" stroke-width="2.8" stroke-linecap="round"><path d="M12 5v14M5 12h14"></path></svg>
+              </span>
+            </sc-if>
+            <sc-if value="{{ isVisitor }}" hint-placeholder-val="{{ true }}">
+              <span style="font:500 9.5px 'JetBrains Mono',monospace;letter-spacing:.1em;color:#6e6b60">SIGN IN</span>
+            </sc-if>
+          </div>
+          <div style="display:flex;gap:1px;background:rgba(23,22,15,.16);border-bottom:1px solid rgba(23,22,15,.16)">
+            <span style="flex:1;text-align:center;font:700 9.5px 'JetBrains Mono',monospace;letter-spacing:.1em;padding:11px 0;background:#17160f;color:#f4f2ec">ALL</span>
+            <span style="flex:1;text-align:center;font:700 9.5px 'JetBrains Mono',monospace;letter-spacing:.1em;padding:11px 0;background:#f4f2ec;color:#5f5c52">WORK</span>
+            <span style="flex:1;text-align:center;font:700 9.5px 'JetBrains Mono',monospace;letter-spacing:.1em;padding:11px 0;background:#f4f2ec;color:#5f5c52">LAB</span>
+          </div>
+          <sc-for list="{{ mobileCards }}" as="m" hint-placeholder-count="2">
+            <article style="border-bottom:1px solid rgba(23,22,15,.12)">
+              <div style="position:relative;height:196px;background:#e3e0d6">
+                <image-slot id="{{ m.mobileSlotId }}" shape="rect" placeholder="Drop a frame"></image-slot>
+                <div style="position:absolute;left:0;bottom:0;pointer-events:none;width:38px;height:38px;background:#17160f;display:flex;align-items:center;justify-content:center">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="#f4f2ec"><path d="M9 5.5v13l10-6.5z"></path></svg>
+                </div>
+                <span style="position:absolute;right:12px;bottom:12px;pointer-events:none;background:#17160f;color:#f4f2ec;padding:2px 7px;font:500 9.5px 'JetBrains Mono',monospace">{{ m.dur }}</span>
+              </div>
+              <div style="padding:14px 18px 18px">
+                <span style="font:700 9px 'JetBrains Mono',monospace;letter-spacing:.14em;color:#b8331c">{{ m.kindLabel }}</span>
+                <h3 style="font:400 24px/1.15 'Instrument Serif',serif;color:#17160f;margin:7px 0 6px">{{ m.title }}</h3>
+                <p style="font:400 10px/1.8 'JetBrains Mono',monospace;color:#6e6b60;margin:0">{{ m.desc }}</p>
+              </div>
+            </article>
+          </sc-for>
+        </div>
+
+        <div style="width:390px;height:740px;border:9px solid #17160f;border-radius:30px;overflow:hidden;background:#f4f2ec;position:relative">
+          <div style="opacity:.3">
+            <div style="display:flex;justify-content:space-between;padding:10px 20px 6px;font:700 11px 'JetBrains Mono',monospace;color:#17160f"><span>9:41</span><span>▮▮▮</span></div>
+            <div style="padding:14px 18px"><div style="height:180px;background:#ddd9cf;margin-bottom:10px"></div><div style="height:180px;background:#ddd9cf"></div></div>
+          </div>
+          <div style="position:absolute;left:0;right:0;bottom:0;background:#f4f2ec;border-top:2px solid #17160f;padding:16px 18px 26px">
+            <div style="width:34px;height:3px;background:rgba(23,22,15,.25);margin:0 auto 16px"></div>
+            <div style="display:flex;align-items:baseline;justify-content:space-between;margin-bottom:4px">
+              <span style="font:400 30px 'Instrument Serif',serif;color:#17160f">New entry</span>
+              <span style="font:700 9px 'JetBrains Mono',monospace;letter-spacing:.12em;color:#b8331c">ADMIN</span>
+            </div>
+            <p style="font:400 10px/1.7 'JetBrains Mono',monospace;color:#5f5c52;margin:0 0 16px">Upload footage, then write it up.</p>
+            <div style="position:relative;border:1px dashed rgba(221,67,39,.55);background:rgba(221,67,39,.04);padding:28px 16px;text-align:center;margin-bottom:14px">
+              <span style="position:absolute;left:6px;top:6px;width:9px;height:9px;border-left:2px solid #dd4327;border-top:2px solid #dd4327"></span>
+              <span style="position:absolute;right:6px;bottom:6px;width:9px;height:9px;border-right:2px solid #dd4327;border-bottom:2px solid #dd4327"></span>
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#dd4327" stroke-width="1.6" stroke-linejoin="round" style="margin-bottom:10px"><rect x="2.5" y="5.5" width="13" height="13"></rect><path d="M15.5 10.5l6-3.4v9.8l-6-3.4z"></path></svg>
+              <div style="font:400 20px 'Instrument Serif',serif;color:#17160f">Record or choose</div>
+              <div style="font:400 9.5px 'JetBrains Mono',monospace;letter-spacing:.08em;color:#5f5c52;margin-top:5px">MP4 · MOV · UP TO 2 GB</div>
+            </div>
+            <div style="display:flex;flex-direction:column;gap:10px;margin-bottom:16px">
+              <div style="border-bottom:1px solid rgba(23,22,15,.25);padding:7px 0;font:400 11.5px 'JetBrains Mono',monospace;color:#5f5c52">Entry title</div>
+              <div style="border:1px solid rgba(23,22,15,.18);background:#fffdf8;padding:11px;height:56px;font:400 10.5px 'JetBrains Mono',monospace;color:#5f5c52">What you built, and why…</div>
+            </div>
+            <div style="display:flex;gap:8px">
+              <span style="flex:1;text-align:center;background:#dd4327;color:#f4f2ec;padding:14px 0;font:700 10.5px 'JetBrains Mono',monospace;letter-spacing:.1em">CONTINUE</span>
+              <span style="border:1px solid rgba(23,22,15,.25);color:#17160f;padding:14px 18px;font:700 10.5px 'JetBrains Mono',monospace;letter-spacing:.1em">DRAFT</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <p style="margin:30px 0 0;font:400 11.5px/1.7 'JetBrains Mono',monospace;color:#5f5c52">
+    Try next: "add the sign-in screen to <a href="#3b">3b</a>" · "give <a href="#3a">3a</a> a denser 4-up grid" · "show the draft/published admin list"
+  </p>
+</section>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1440,&quot;height&quot;:1000}}">
+const PROJECTS = [
+  { id: "gns3", kind: "eng", title: "GNS3 Industrial Network", desc: "Multi-site OT/IT topology, segmented VLANs, simulated Modbus traffic.", dur: "06:24", status: "published" },
+  { id: "scada", kind: "eng", title: "SCADA Hardening", desc: "Defence-in-depth for RTUs and supervisory control, IEC 62443 aligned.", dur: "04:02", status: "published" },
+  { id: "bgp", kind: "eng", title: "OSPF / BGP Failover", desc: "Dual-stack routing across two sites with link-failure drills.", dur: "07:51", status: "published" },
+  { id: "drift", kind: "art", title: "Drift Study No. 4", desc: "Latent interpolation across three coastline seeds, graded to 16mm.", dur: "01:12", status: "published" },
+  { id: "refinery", kind: "art", title: "Refinery Dreams", desc: "Industrial photography fed back through image-to-video, frame by frame.", dur: "02:37", status: "published" },
+  { id: "telemetry", kind: "eng", title: "Pump Telemetry", desc: "PLC ingestion with threshold alerting and Grafana dashboards.", dur: "03:18", status: "draft" }
+];
+
+class Component extends DCLogic {
+  state = { role: "visitor", track: "all", hovered: null, step: 0, pct: 0, dragging: false,
+    title: "GNS3 Industrial Network", desc: "A multi-site OT/IT topology simulating a pumping station and its corporate uplink." };
+
+  componentWillUnmount() { clearInterval(this._t); }
+
+  startUpload = () => {
+    this.setState({ step: 1, pct: 0 });
+    clearInterval(this._t);
+    this._t = setInterval(() => {
+      this.setState(s => {
+        const pct = Math.min(100, s.pct + 4);
+        if (pct >= 100) { clearInterval(this._t); setTimeout(() => this.setState({ step: 2 }), 450); }
+        return { pct };
+      });
+    }, 70);
+  };
+
+  renderVals() {
+    const { role, track, hovered, step, pct, dragging } = this.state;
+    const isAdmin = role === "admin";
+    const visible = PROJECTS.filter(p => isAdmin || p.status === "published");
+
+    const counts = { all: visible.length, eng: visible.filter(p => p.kind === "eng").length, art: visible.filter(p => p.kind === "art").length };
+    const tracks = [["all", "ALL"], ["eng", "WORK"], ["art", "LAB"]].map(([id, label]) => {
+      const on = track === id;
+      return { label, count: counts[id], onClick: () => this.setState({ track: id }),
+        bg: on ? "#17160f" : "transparent", fg: on ? "#f4f2ec" : "#6e6b60",
+        bd: on ? "#17160f" : "rgba(23,22,15,.25)" };
+    });
+
+    const shown = visible.filter(p => track === "all" || p.kind === track).map((p, i) => ({
+      ...p, num: "0" + (i + 1), slotId: "v3-grid-" + p.id,
+      kindLabel: p.kind === "art" ? "LAB" : "WORK",
+      kindFg: p.kind === "art" ? "#b8331c" : "#6e6b60",
+      showDraft: p.status === "draft",
+      showEdit: isAdmin && hovered === p.id,
+      onEnter: () => this.setState({ hovered: p.id }),
+      onLeave: () => this.setState({ hovered: null })
+    }));
+
+    const labels = ["DROP", "UPLOAD", "DETAILS", "LIVE"];
+    const steps = labels.map((label, i) => ({ label,
+      bg: i === step ? "#17160f" : "#f4f2ec",
+      fg: i === step ? "#f4f2ec" : i < step ? "#b8331c" : "#5f5c52" }));
+
+    return {
+      isAdmin, isVisitor: !isAdmin,
+      beAdmin: () => this.setState({ role: "admin" }),
+      beVisitor: () => this.setState({ role: "visitor", step: 0, pct: 0 }),
+      visBg: isAdmin ? "#f4f2ec" : "#17160f", visFg: isAdmin ? "#6e6b60" : "#f4f2ec",
+      admBg: isAdmin ? "#dd4327" : "#f4f2ec", admFg: isAdmin ? "#f4f2ec" : "#6e6b60",
+      countLabel: isAdmin ? "PORTFOLIO / 2024—2026 / 6 ENTRIES · 1 DRAFT" : "PORTFOLIO / 2024—2026 / 5 ENTRIES",
+      gateNote: isAdmin ? "Editing, publishing and deleting are visible to you only." : "Read-only view. Sign in as admin to upload.",
+      tracks, shown, steps,
+      chapters: [
+        { t: "00:00", label: "Topology and addressing plan in GNS3" },
+        { t: "02:11", label: "Firewall policy between control zone and enterprise LAN" },
+        { t: "04:38", label: "Capturing Modbus/TCP in Wireshark and flagging anomalies" }
+      ],
+      spec: [{ k: "YEAR", v: "2026" }, { k: "TYPE", v: "Academic" }, { k: "STACK", v: "GNS3 · pfSense" }, { k: "RUNTIME", v: "06:24" }],
+      isDrop: step === 0, isUploading: step === 1, isDetails: step === 2, isDone: step === 3,
+      dropBd: dragging ? "#dd4327" : "rgba(221,67,39,.45)",
+      dropBg: dragging ? "rgba(221,67,39,.07)" : "transparent",
+      dropTitle: dragging ? "Release" : "Drop footage",
+      dragOn: () => this.setState({ dragging: true }),
+      dragOff: () => this.setState({ dragging: false }),
+      startUpload: this.startUpload,
+      pct, pctLabel: pct + "%",
+      phase: pct < 70 ? "UPLOADING" : pct < 100 ? "TRANSCODING 1080P" : "FINALISING",
+      title: this.state.title, desc: this.state.desc,
+      onTitle: e => this.setState({ title: e.target.value }),
+      onDesc: e => this.setState({ desc: e.target.value }),
+      publish: () => this.setState({ step: 3 }),
+      reset: () => this.setState({ step: 0, pct: 0, dragging: false }),
+      mobileCards: [PROJECTS[0], PROJECTS[3]].map(p => ({ ...p,
+        mobileSlotId: "v3-mob-" + p.id, kindLabel: p.kind === "art" ? "LAB" : "WORK" }))
+    };
+  }
+}
+</script>
+</body>
+</html>

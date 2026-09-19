@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet data-dc-atomics>
+<meta name="design_doc_mode" content="canvas">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Syne:wght@500;700;800&display=swap" rel="stylesheet">
+<script src="./image-slot.js"></script>
+<style>
+body{margin:0;background:#eceef3;font-family:"DM Sans",system-ui,sans-serif}
+a{color:#2563eb;text-decoration:none}
+a:hover{color:#1d4ed8}
+</style>
+</helmet>
+
+<section style="padding:44px 48px 36px">
+  <div style="display:flex;align-items:baseline;gap:10px;margin:0 0 6px">
+    <a href="#t1" style="font:700 10px ui-monospace,Menlo,monospace;padding:3px 7px;background:#0f172a;color:#fff;border-radius:4px">1</a>
+    <span style="font:700 13px/1.2 'DM Sans',sans-serif;color:#0f172a">Portfolio + upload mockups — built on your repo's visual system</span>
+  </div>
+  <p style="max-width:720px;margin:0 0 26px;font:400 12.5px/1.6 'DM Sans',sans-serif;color:#475569">
+    Steel-blue <b style="color:#0f172a">#2563EB</b> for engineering work, crimson <b style="color:#0f172a">#DC2626</b> for the GenAI video-art track. <b style="color:#0f172a">Every video thumbnail is a live drop target</b> — drag a frame or screenshot onto it and it sticks. Hover a card in <a href="#1a">1a</a>, and click through the whole upload in <a href="#1c">1c</a>.
+  </p>
+
+  <div style="display:flex;flex-wrap:wrap;gap:34px;align-items:flex-start">
+
+    <div id="1a" style="display:flex;flex-direction:column;gap:9px">
+      <div style="display:flex;align-items:baseline;gap:8px;font:400 11px/1.3 'DM Sans',sans-serif;color:#64748b">
+        <a href="#1a" style="font:700 10.5px ui-monospace,Menlo,monospace;padding:3px 7px;background:rgba(15,23,42,.08);color:#0f172a;border-radius:5px">1a</a>
+        Grid — two tracks, hover-to-preview video
+      </div>
+      <div style="width:1280px;max-width:100%;background:#f8f9fb;border:1px solid rgba(15,23,42,.1);border-radius:12px;box-shadow:0 1px 3px rgba(0,0,0,.08);overflow:hidden">
+        <div style="display:flex;justify-content:space-between;align-items:center;min-height:68px;padding:0 32px;background:rgba(248,249,251,.9);border-bottom:1px solid rgba(15,23,42,.08)">
+          <span style="font:800 19px 'Syne',serif;color:#0f172a;letter-spacing:-.01em">CP Majan</span>
+          <div style="display:flex;gap:6px">
+            <span style="padding:6px 11px;border-radius:6px;font:500 13.5px 'DM Sans';color:#2563eb;background:rgba(37,99,235,.08)">Work</span>
+            <span style="padding:6px 11px;border-radius:6px;font:500 13.5px 'DM Sans';color:#475569">About</span>
+            <span style="padding:6px 11px;border-radius:6px;font:500 13.5px 'DM Sans';color:#475569">Contact</span>
+          </div>
+          <div style="display:flex;gap:9px;align-items:center">
+            <span style="border:1px solid rgba(37,99,235,.25);border-radius:999px;padding:4px 12px;font:500 12px 'DM Sans';color:#2563eb">ADMIN</span>
+            <span style="display:flex;align-items:center;gap:7px;background:#2563eb;color:#fff;border-radius:8px;padding:8px 14px;font:700 13px 'DM Sans';box-shadow:0 6px 18px rgba(37,99,235,.35)">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round"><path d="M12 19V5M5 12l7-7 7 7"></path></svg>Upload
+            </span>
+          </div>
+        </div>
+
+        <div style="padding:30px 32px 36px;background:radial-gradient(circle at 1px 1px, rgba(37,99,235,.09) 1px, transparent 0) 0 0/24px 24px,#f8f9fb">
+          <h1 style="font:700 40px/1.1 'Syne',serif;color:#0f172a;margin:0 0 8px;letter-spacing:-.02em">Networks I build.<br><span style="color:#dc2626">Images I dream up.</span></h1>
+          <p style="max-width:560px;margin:0 0 22px;font:400 14.5px/1.6 'DM Sans';color:#475569">Industrial networking and OT security coursework, alongside a running experiment in generative video art.</p>
+
+          <div style="display:flex;gap:8px;margin-bottom:22px">
+            <sc-for list="{{ tracks }}" as="t" hint-placeholder-count="3">
+              <button onClick="{{ t.onClick }}" style="border:1px solid {{ t.bd }};background:{{ t.bg }};color:{{ t.fg }};border-radius:8px;padding:8px 15px;font:700 13px 'DM Sans';cursor:pointer;display:flex;gap:7px;align-items:center;white-space:nowrap;flex:none">
+                {{ t.label }}<span style="opacity:.6;font-weight:500">{{ t.count }}</span>
+              </button>
+            </sc-for>
+          </div>
+
+          <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:20px">
+            <sc-for list="{{ shown }}" as="p" hint-placeholder-count="6">
+              <article onMouseEnter="{{ p.onEnter }}" onMouseLeave="{{ p.onLeave }}" style="background:#fff;border:1px solid rgba(15,23,42,.07);border-radius:12px;overflow:hidden;box-shadow:{{ p.shadow }};transform:{{ p.lift }};transition:transform .22s ease,box-shadow .22s ease;cursor:pointer">
+                <div style="position:relative;height:172px;background:#111827">
+                  <image-slot id="{{ p.slotId }}" shape="rect" placeholder=""></image-slot>
+                  <div style="position:absolute;inset:0;pointer-events:none;background:{{ p.scrim }}"></div>
+                  <div style="position:absolute;left:50%;top:50%;transform:translate(-50%,-50%) scale({{ p.playScale }});pointer-events:none;width:46px;height:46px;border-radius:50%;background:rgba(255,255,255,.94);display:flex;align-items:center;justify-content:center;transition:transform .22s ease;box-shadow:0 6px 20px rgba(15,23,42,.3)">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="{{ p.accent }}"><path d="M9 5.5v13l10-6.5z"></path></svg>
+                  </div>
+                  <span style="position:absolute;left:0;right:0;top:calc(50% + 32px);text-align:center;pointer-events:none;font:700 9.5px 'DM Sans';letter-spacing:.12em;color:rgba(255,255,255,.6)">DROP A FRAME</span>
+                  <div style="position:absolute;right:10px;bottom:10px;pointer-events:none;display:flex;align-items:center;gap:5px;background:rgba(15,23,42,.8);color:#fff;border-radius:5px;padding:3px 8px;font:500 11px ui-monospace,Menlo,monospace">
+                    <svg width="10" height="10" viewBox="0 0 24 24" fill="#fff"><path d="M9 5.5v13l10-6.5z"></path></svg>{{ p.dur }}
+                  </div>
+                </div>
+                <div style="padding:15px 16px 17px">
+                  <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:9px">
+                    <sc-for list="{{ p.tags }}" as="tag" hint-placeholder-count="2">
+                      <span style="font:700 10.5px 'DM Sans';padding:3px 8px;border-radius:999px;white-space:nowrap;background:{{ p.tagBg }};color:{{ p.accent }}">{{ tag }}</span>
+                    </sc-for>
+                  </div>
+                  <h3 style="font:700 17px/1.25 'Syne',serif;color:#0f172a;margin:0 0 6px">{{ p.title }}</h3>
+                  <p style="font:400 13px/1.55 'DM Sans';color:#475569;margin:0">{{ p.desc }}</p>
+                </div>
+              </article>
+            </sc-for>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="1c" style="display:flex;flex-direction:column;gap:9px">
+      <div style="display:flex;align-items:baseline;gap:8px;font:400 11px/1.3 'DM Sans',sans-serif;color:#64748b">
+        <a href="#1c" style="font:700 10.5px ui-monospace,Menlo,monospace;padding:3px 7px;background:rgba(15,23,42,.08);color:#0f172a;border-radius:5px">1c</a>
+        Upload flow — clickable, four states
+      </div>
+      <div style="width:660px;max-width:100%;background:#f8f9fb;border:1px solid rgba(15,23,42,.1);border-radius:12px;box-shadow:0 1px 3px rgba(0,0,0,.08);overflow:hidden">
+        <div style="display:flex;align-items:center;justify-content:space-between;padding:16px 24px;border-bottom:1px solid rgba(15,23,42,.08);background:#fff">
+          <span style="font:700 16px 'Syne',serif;color:#0f172a">New project</span>
+          <div style="display:flex;gap:6px;align-items:center">
+            <sc-for list="{{ steps }}" as="s" hint-placeholder-count="4">
+              <span style="font:700 10px 'DM Sans';letter-spacing:.05em;padding:4px 9px;border-radius:999px;background:{{ s.bg }};color:{{ s.fg }}">{{ s.label }}</span>
+            </sc-for>
+          </div>
+        </div>
+
+        <div style="padding:24px">
+          <sc-if value="{{ isDrop }}" hint-placeholder-val="{{ true }}">
+            <div onClick="{{ startUpload }}" onMouseEnter="{{ dragOn }}" onMouseLeave="{{ dragOff }}" style="border:2px dashed {{ dropBd }};background:{{ dropBg }};border-radius:12px;padding:48px 24px;text-align:center;cursor:pointer;transition:all .18s ease">
+              <div style="width:58px;height:58px;margin:0 auto 16px;border-radius:15px;background:#fff;border:1px solid rgba(15,23,42,.1);display:flex;align-items:center;justify-content:center;box-shadow:0 4px 14px rgba(15,23,42,.08)">
+                <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#2563eb" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                  <rect x="2.5" y="5.5" width="13" height="13" rx="2.5"></rect>
+                  <path d="M15.5 10.5l6-3.4v9.8l-6-3.4z"></path>
+                </svg>
+              </div>
+              <div style="font:700 17px 'Syne',serif;color:#0f172a;margin-bottom:6px">{{ dropTitle }}</div>
+              <p style="font:400 13px/1.55 'DM Sans';color:#475569;margin:0 0 14px">MP4, MOV or WebM up to 2 GB · or a PDF report and stills</p>
+              <span style="display:inline-block;background:#2563eb;color:#fff;border-radius:8px;padding:9px 18px;font:700 13px 'DM Sans';box-shadow:0 6px 18px rgba(37,99,235,.35)">Choose file</span>
+            </div>
+          </sc-if>
+
+          <sc-if value="{{ isUploading }}" hint-placeholder-val="{{ false }}">
+            <div style="background:#fff;border:1px solid rgba(15,23,42,.08);border-radius:12px;padding:20px;box-shadow:0 4px 24px rgba(0,0,0,.05)">
+              <div style="display:flex;gap:14px;align-items:center;margin-bottom:16px">
+                <div style="position:relative;width:104px;height:62px;border-radius:8px;flex:none;background:#111827;overflow:hidden">
+                  <image-slot id="up-frame" shape="rect" placeholder=""></image-slot>
+                  <div style="position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);pointer-events:none;width:26px;height:26px;border-radius:50%;background:rgba(255,255,255,.9);display:flex;align-items:center;justify-content:center">
+                    <svg width="11" height="11" viewBox="0 0 24 24" fill="#2563eb"><path d="M9 5.5v13l10-6.5z"></path></svg>
+                  </div>
+                </div>
+                <div style="flex:1;min-width:0">
+                  <div style="font:700 14px 'DM Sans';color:#0f172a">gns3-industrial-walkthrough.mp4</div>
+                  <div style="font:400 12.5px 'DM Sans';color:#475569">412 MB · 1920×1080 · 06:24</div>
+                </div>
+                <span style="font:700 13px ui-monospace,Menlo,monospace;color:#2563eb">{{ pctLabel }}</span>
+              </div>
+              <div style="height:8px;border-radius:999px;background:#e8edf8;overflow:hidden;margin-bottom:12px">
+                <div style="height:100%;width:{{ pct }}%;background:linear-gradient(90deg,#2563eb,#5b8ef0);transition:width .18s linear"></div>
+              </div>
+              <div style="display:flex;gap:18px;font:500 12px 'DM Sans';color:#475569">
+                <span>{{ phase }}</span><span style="color:#94a3b8">You can start writing the description below while this finishes.</span>
+              </div>
+            </div>
+            <div style="margin-top:14px;padding:13px 15px;border-radius:10px;background:rgba(37,99,235,.06);border:1px solid rgba(37,99,235,.18);font:400 12.5px/1.5 'DM Sans';color:#1e3a8a">
+              A poster frame is picked automatically at the 3-second mark — you can change it on the next step.
+            </div>
+          </sc-if>
+
+          <sc-if value="{{ isDetails }}" hint-placeholder-val="{{ false }}">
+            <div style="display:grid;grid-template-columns:200px 1fr;gap:18px;align-items:start">
+              <div>
+                <div style="position:relative;height:118px;border-radius:10px;background:#111827;overflow:hidden;border:1px solid rgba(15,23,42,.08)">
+                  <image-slot id="poster-main" shape="rect" placeholder=""></image-slot>
+                  <span style="position:absolute;left:0;right:0;top:44px;text-align:center;pointer-events:none;font:700 9.5px 'DM Sans';letter-spacing:.12em;color:rgba(255,255,255,.55)">POSTER FRAME</span>
+                  <span style="position:absolute;right:7px;bottom:7px;pointer-events:none;background:rgba(15,23,42,.8);color:#fff;border-radius:4px;padding:2px 6px;font:500 10px ui-monospace,Menlo,monospace">06:24</span>
+                </div>
+                <div style="display:flex;gap:6px;margin-top:8px">
+                  <span style="flex:1;height:36px;border-radius:6px;overflow:hidden;background:#111827;outline:2px solid #2563eb;outline-offset:-2px"><image-slot id="poster-a" shape="rect" placeholder=""></image-slot></span>
+                  <span style="flex:1;height:36px;border-radius:6px;overflow:hidden;background:#111827"><image-slot id="poster-b" shape="rect" placeholder=""></image-slot></span>
+                  <span style="flex:1;height:36px;border-radius:6px;overflow:hidden;background:#111827"><image-slot id="poster-c" shape="rect" placeholder=""></image-slot></span>
+                </div>
+                <div style="font:400 11px 'DM Sans';color:#64748b;margin-top:7px">Pick a poster frame</div>
+              </div>
+
+              <div>
+                <div style="margin-bottom:12px">
+                  <label style="font:700 12.5px 'DM Sans';color:#0f172a;display:block;margin-bottom:5px">Title</label>
+                  <input value="{{ title }}" onChange="{{ onTitle }}" style="width:100%;border:1px solid rgba(15,23,42,.2);border-radius:8px;padding:9px 11px;font:400 13.5px 'DM Sans';background:#fff;box-sizing:border-box">
+                </div>
+                <div style="margin-bottom:12px">
+                  <label style="font:700 12.5px 'DM Sans';color:#0f172a;display:block;margin-bottom:5px">Description <span style="font-weight:400;color:#64748b">· Markdown</span></label>
+                  <textarea value="{{ desc }}" onChange="{{ onDesc }}" rows="5" style="width:100%;border:1px solid rgba(15,23,42,.2);border-radius:8px;padding:9px 11px;font:400 13px/1.6 'DM Sans';background:#fff;box-sizing:border-box;resize:vertical"></textarea>
+                </div>
+                <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px">
+                  <div>
+                    <label style="font:700 12.5px 'DM Sans';color:#0f172a;display:block;margin-bottom:5px">Track</label>
+                    <div style="display:flex;gap:6px">
+                      <span style="flex:1;text-align:center;padding:8px 0;border-radius:8px;font:700 12.5px 'DM Sans';background:#2563eb;color:#fff">Engineering</span>
+                      <span style="flex:1;text-align:center;padding:8px 0;border-radius:8px;font:700 12.5px 'DM Sans';background:#fff;border:1px solid rgba(15,23,42,.18);color:#475569">Video art</span>
+                    </div>
+                  </div>
+                  <div>
+                    <label style="font:700 12.5px 'DM Sans';color:#0f172a;display:block;margin-bottom:5px">Visibility</label>
+                    <div style="display:flex;gap:6px">
+                      <span style="flex:1;text-align:center;padding:8px 0;border-radius:8px;font:700 12.5px 'DM Sans';background:#fff;border:1px solid rgba(15,23,42,.18);color:#475569">Public</span>
+                      <span style="flex:1;text-align:center;padding:8px 0;border-radius:8px;font:700 12.5px 'DM Sans';background:rgba(220,38,38,.1);border:1px solid rgba(220,38,38,.25);color:#dc2626">Sign-in</span>
+                    </div>
+                  </div>
+                </div>
+                <div style="margin-bottom:16px">
+                  <label style="font:700 12.5px 'DM Sans';color:#0f172a;display:block;margin-bottom:5px">Tags</label>
+                  <div style="display:flex;gap:6px;flex-wrap:wrap;border:1px solid rgba(15,23,42,.2);border-radius:8px;padding:7px 9px;background:#fff">
+                    <span style="font:700 11px 'DM Sans';padding:4px 9px;border-radius:999px;background:rgba(37,99,235,.12);color:#2563eb">GNS3 ×</span>
+                    <span style="font:700 11px 'DM Sans';padding:4px 9px;border-radius:999px;background:rgba(37,99,235,.12);color:#2563eb">OT security ×</span>
+                    <span style="font:400 12.5px 'DM Sans';color:#94a3b8;padding:4px 2px">Add a tag…</span>
+                  </div>
+                </div>
+                <div style="display:flex;gap:8px">
+                  <button onClick="{{ publish }}" style="background:#2563eb;color:#fff;border:0;border-radius:8px;padding:10px 18px;font:700 13px 'DM Sans';cursor:pointer;box-shadow:0 6px 18px rgba(37,99,235,.35)">Publish project</button>
+                  <button onClick="{{ reset }}" style="background:#fff;border:1px solid rgba(15,23,42,.18);color:#0f172a;border-radius:8px;padding:10px 18px;font:700 13px 'DM Sans';cursor:pointer">Save as draft</button>
+                </div>
+              </div>
+            </div>
+          </sc-if>
+
+          <sc-if value="{{ isDone }}" hint-placeholder-val="{{ false }}">
+            <div style="text-align:center;padding:38px 20px">
+              <div style="width:52px;height:52px;margin:0 auto 16px;border-radius:50%;background:rgba(37,99,235,.1);border:1px solid rgba(37,99,235,.25);display:flex;align-items:center;justify-content:center">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#2563eb" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12.5l5.5 5.5L20 7"></path></svg>
+              </div>
+              <div style="font:700 19px 'Syne',serif;color:#0f172a;margin-bottom:6px">Published to Work</div>
+              <p style="font:400 13.5px/1.6 'DM Sans';color:#475569;margin:0 0 18px">{{ title }} is live in the Engineering track.</p>
+              <div style="display:flex;gap:8px;justify-content:center">
+                <span style="background:#2563eb;color:#fff;border-radius:8px;padding:9px 17px;font:700 13px 'DM Sans'">View project</span>
+                <button onClick="{{ reset }}" style="background:#fff;border:1px solid rgba(15,23,42,.18);color:#0f172a;border-radius:8px;padding:9px 17px;font:700 13px 'DM Sans';cursor:pointer">Upload another</button>
+              </div>
+            </div>
+          </sc-if>
+        </div>
+      </div>
+    </div>
+
+    <div id="1b" style="display:flex;flex-direction:column;gap:9px">
+      <div style="display:flex;align-items:baseline;gap:8px;font:400 11px/1.3 'DM Sans',sans-serif;color:#64748b">
+        <a href="#1b" style="font:700 10.5px ui-monospace,Menlo,monospace;padding:3px 7px;background:rgba(15,23,42,.08);color:#0f172a;border-radius:5px">1b</a>
+        Grid alternative — editorial index, one big preview
+      </div>
+      <div style="width:1000px;max-width:100%;background:#0f172a;border-radius:12px;box-shadow:0 1px 3px rgba(0,0,0,.08);overflow:hidden;display:grid;grid-template-columns:1fr 420px">
+        <div style="padding:30px 28px">
+          <div style="font:700 10.5px 'DM Sans';letter-spacing:.14em;color:#64748b;margin-bottom:18px">INDEX · 2024—2026</div>
+          <sc-for list="{{ indexRows }}" as="r" hint-placeholder-count="6">
+            <div onMouseEnter="{{ r.onEnter }}" style="display:grid;grid-template-columns:38px 1fr auto;gap:14px;align-items:baseline;padding:13px 10px;border-radius:8px;border-bottom:1px solid rgba(255,255,255,.07);background:{{ r.rowBg }};cursor:pointer;transition:background .18s ease">
+              <span style="font:500 11px ui-monospace,Menlo,monospace;color:#475569">{{ r.num }}</span>
+              <span style="font:700 17px 'Syne',serif;color:{{ r.fg }};letter-spacing:-.01em">{{ r.title }}</span>
+              <span style="font:500 11px 'DM Sans';letter-spacing:.06em;color:{{ r.accent }}">{{ r.kindLabel }}</span>
+            </div>
+          </sc-for>
+        </div>
+        <div style="padding:30px 28px 30px 0;display:flex;flex-direction:column;gap:14px">
+          <div style="position:relative;flex:none;height:236px;border-radius:10px;background:#111827;overflow:hidden">
+            <image-slot id="{{ previewSlotId }}" shape="rect" placeholder=""></image-slot>
+            <div style="position:absolute;inset:0;pointer-events:none;background:linear-gradient(180deg,transparent 55%,rgba(15,23,42,.75))"></div>
+            <div style="position:absolute;left:50%;top:44%;transform:translate(-50%,-50%);pointer-events:none;width:54px;height:54px;border-radius:50%;background:rgba(255,255,255,.92);display:flex;align-items:center;justify-content:center;box-shadow:0 8px 24px rgba(0,0,0,.35)">
+              <svg width="21" height="21" viewBox="0 0 24 24" fill="{{ previewAccent }}"><path d="M9 5.5v13l10-6.5z"></path></svg>
+            </div>
+            <span style="position:absolute;left:0;right:0;top:calc(44% + 38px);text-align:center;pointer-events:none;font:700 9.5px 'DM Sans';letter-spacing:.12em;color:rgba(255,255,255,.55)">DROP A FRAME</span>
+            <span style="position:absolute;right:12px;bottom:12px;pointer-events:none;font:500 11px ui-monospace,Menlo,monospace;color:#e2e8f0;background:rgba(15,23,42,.65);border-radius:5px;padding:3px 8px">{{ previewDur }}</span>
+          </div>
+          <div>
+            <h3 style="font:700 22px/1.2 'Syne',serif;color:#fff;margin:0 0 8px;letter-spacing:-.01em">{{ previewTitle }}</h3>
+            <p style="font:400 13.5px/1.65 'DM Sans';color:#94a3b8;margin:0 0 14px">{{ previewDesc }}</p>
+            <div style="display:flex;gap:6px;flex-wrap:wrap">
+              <sc-for list="{{ previewTags }}" as="tag" hint-placeholder-count="3">
+                <span style="font:700 10.5px 'DM Sans';padding:4px 9px;border-radius:999px;white-space:nowrap;background:rgba(255,255,255,.08);color:#cbd5e1">{{ tag }}</span>
+              </sc-for>
+            </div>
+          </div>
+          <span style="margin-top:auto;align-self:flex-start;background:#fff;color:#0f172a;border-radius:8px;padding:10px 18px;font:700 13px 'DM Sans'">Open case study →</span>
+        </div>
+      </div>
+    </div>
+
+    <div id="1d" style="display:flex;flex-direction:column;gap:9px">
+      <div style="display:flex;align-items:baseline;gap:8px;font:400 11px/1.3 'DM Sans',sans-serif;color:#64748b">
+        <a href="#1d" style="font:700 10.5px ui-monospace,Menlo,monospace;padding:3px 7px;background:rgba(15,23,42,.08);color:#0f172a;border-radius:5px">1d</a>
+        Project page — video hero over the write-up
+      </div>
+      <div style="width:1000px;max-width:100%;background:#f8f9fb;border:1px solid rgba(15,23,42,.1);border-radius:12px;box-shadow:0 1px 3px rgba(0,0,0,.08);overflow:hidden">
+        <div style="position:relative;height:340px;background:#111827">
+          <image-slot id="hero-gns3" shape="rect" placeholder=""></image-slot>
+          <div style="position:absolute;inset:0;pointer-events:none;background:linear-gradient(180deg,rgba(15,23,42,.25),transparent 40%)"></div>
+          <div style="position:absolute;left:50%;top:46%;transform:translate(-50%,-50%);pointer-events:none;width:70px;height:70px;border-radius:50%;background:rgba(255,255,255,.94);display:flex;align-items:center;justify-content:center;box-shadow:0 10px 30px rgba(0,0,0,.4)">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="#2563eb"><path d="M9 5.5v13l10-6.5z"></path></svg>
+          </div>
+          <span style="position:absolute;left:0;right:0;top:calc(46% + 48px);text-align:center;pointer-events:none;font:700 10px 'DM Sans';letter-spacing:.14em;color:rgba(255,255,255,.55)">DROP THE HERO FRAME</span>
+          <div style="position:absolute;left:0;right:0;bottom:0;pointer-events:none;padding:18px 24px;background:linear-gradient(180deg,transparent,rgba(15,23,42,.92))">
+            <div style="display:flex;align-items:center;gap:13px">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="#fff"><path d="M9 5.5v13l10-6.5z"></path></svg>
+              <div style="flex:1;height:4px;border-radius:999px;background:rgba(255,255,255,.25);position:relative">
+                <div style="position:absolute;left:0;top:0;bottom:0;width:34%;border-radius:999px;background:#2563eb"></div>
+                <div style="position:absolute;left:34%;top:-4px;width:12px;height:12px;border-radius:50%;background:#fff;margin-left:-6px"></div>
+              </div>
+              <span style="font:500 11.5px ui-monospace,Menlo,monospace;color:#e2e8f0">02:11 / 06:24</span>
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9V4h5M20 15v5h-5M15 4h5v5M9 20H4v-5"></path></svg>
+            </div>
+          </div>
+        </div>
+        <div style="display:grid;grid-template-columns:2fr 1fr;gap:26px;padding:28px 30px 34px;background:radial-gradient(circle at 1px 1px, rgba(37,99,235,.09) 1px, transparent 0) 0 0/24px 24px,#f8f9fb">
+          <div>
+            <div style="display:flex;gap:6px;margin-bottom:11px">
+              <span style="font:700 10.5px 'DM Sans';padding:3px 9px;border-radius:999px;white-space:nowrap;background:rgba(37,99,235,.12);color:#2563eb">GNS3</span>
+              <span style="font:700 10.5px 'DM Sans';padding:3px 9px;border-radius:999px;white-space:nowrap;background:rgba(37,99,235,.12);color:#2563eb">OT security</span>
+              <span style="font:700 10.5px 'DM Sans';padding:3px 9px;border-radius:999px;white-space:nowrap;background:rgba(37,99,235,.12);color:#2563eb">VLAN</span>
+            </div>
+            <h1 style="font:700 33px/1.15 'Syne',serif;color:#0f172a;margin:0 0 12px;letter-spacing:-.02em">GNS3 Industrial Network</h1>
+            <p style="font:400 15px/1.7 'DM Sans';color:#475569;margin:0 0 14px">A multi-site OT/IT topology simulating a pumping station and its corporate uplink — segmented VLANs, a DMZ for historian traffic, and a hardened jump host for remote engineering access.</p>
+            <h2 style="font:700 17px 'Syne',serif;color:#0f172a;margin:22px 0 10px">What the walkthrough covers</h2>
+            <ul style="margin:0;padding-left:18px;font:400 14px/1.8 'DM Sans';color:#475569">
+              <li>Building the topology and addressing plan in GNS3</li>
+              <li>Firewall policy between the control zone and enterprise LAN</li>
+              <li>Capturing Modbus/TCP in Wireshark and flagging anomalies</li>
+            </ul>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:22px">
+              <div style="position:relative;height:120px;border-radius:10px;overflow:hidden;background:#111827"><image-slot id="gns3-still-1" shape="rect" placeholder="Topology screenshot"></image-slot></div>
+              <div style="position:relative;height:120px;border-radius:10px;overflow:hidden;background:#111827"><image-slot id="gns3-still-2" shape="rect" placeholder="Wireshark capture"></image-slot></div>
+            </div>
+          </div>
+          <aside style="background:#fff;border:1px solid rgba(15,23,42,.07);border-radius:12px;padding:18px;box-shadow:0 4px 24px rgba(0,0,0,.05);height:fit-content">
+            <div style="font:700 11px 'DM Sans';letter-spacing:.1em;color:#64748b;margin-bottom:12px">DETAILS</div>
+            <div style="font:400 13.5px/2 'DM Sans';color:#475569">
+              <div><b style="color:#0f172a">Year</b> · 2026</div>
+              <div><b style="color:#0f172a">Type</b> · Academic</div>
+              <div><b style="color:#0f172a">Stack</b> · GNS3, pfSense, Wireshark</div>
+            </div>
+            <div style="height:1px;background:rgba(15,23,42,.08);margin:14px 0"></div>
+            <div style="font:700 11px 'DM Sans';letter-spacing:.1em;color:#64748b;margin-bottom:10px">FILES</div>
+            <div style="display:flex;flex-direction:column;gap:7px">
+              <span style="display:flex;align-items:center;gap:8px;font:500 12.5px 'DM Sans';color:#2563eb;border:1px solid rgba(37,99,235,.2);border-radius:8px;padding:8px 11px">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#2563eb" stroke-width="1.8" stroke-linejoin="round"><path d="M13 2.5H6.5A1.5 1.5 0 005 4v16a1.5 1.5 0 001.5 1.5h11A1.5 1.5 0 0019 20V8.5z"></path><path d="M13 2.5V8.5H19"></path></svg>
+                topology-report.pdf<span style="color:#94a3b8;margin-left:auto">2.1 MB</span>
+              </span>
+              <span style="display:flex;align-items:center;gap:8px;font:500 12.5px 'DM Sans';color:#2563eb;border:1px solid rgba(37,99,235,.2);border-radius:8px;padding:8px 11px">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#2563eb" stroke-width="1.8" stroke-linejoin="round"><path d="M13 2.5H6.5A1.5 1.5 0 005 4v16a1.5 1.5 0 001.5 1.5h11A1.5 1.5 0 0019 20V8.5z"></path><path d="M13 2.5V8.5H19"></path></svg>
+                lab.gns3project<span style="color:#94a3b8;margin-left:auto">840 KB</span>
+              </span>
+            </div>
+          </aside>
+        </div>
+      </div>
+    </div>
+
+    <div id="1e" style="display:flex;flex-direction:column;gap:9px">
+      <div style="display:flex;align-items:baseline;gap:8px;font:400 11px/1.3 'DM Sans',sans-serif;color:#64748b">
+        <a href="#1e" style="font:700 10.5px ui-monospace,Menlo,monospace;padding:3px 7px;background:rgba(15,23,42,.08);color:#0f172a;border-radius:5px">1e</a>
+        Mobile — feed and the upload sheet
+      </div>
+      <div style="display:flex;gap:22px">
+        <div style="width:390px;border-radius:34px;border:9px solid #0f172a;overflow:hidden;background:#f8f9fb;box-shadow:0 12px 32px rgba(15,23,42,.18)">
+          <div style="display:flex;justify-content:space-between;padding:9px 20px 5px;font:700 11.5px 'DM Sans';color:#0f172a"><span>9:41</span><span>▮▮▮ ⌁</span></div>
+          <div style="display:flex;justify-content:space-between;align-items:center;padding:8px 18px 12px;border-bottom:1px solid rgba(15,23,42,.08)">
+            <span style="font:800 17px 'Syne',serif;color:#0f172a">CP Majan</span>
+            <span style="background:#2563eb;border-radius:999px;width:32px;height:32px;display:flex;align-items:center;justify-content:center">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.6" stroke-linecap="round"><path d="M12 5v14M5 12h14"></path></svg>
+            </span>
+          </div>
+          <div style="display:flex;gap:7px;padding:12px 18px;overflow:hidden">
+            <span style="font:700 12px 'DM Sans';padding:6px 13px;border-radius:999px;background:#2563eb;color:#fff;white-space:nowrap">All</span>
+            <span style="font:700 12px 'DM Sans';padding:6px 13px;border-radius:999px;background:#fff;border:1px solid rgba(15,23,42,.15);color:#475569;white-space:nowrap">Engineering</span>
+            <span style="font:700 12px 'DM Sans';padding:6px 13px;border-radius:999px;background:#fff;border:1px solid rgba(220,38,38,.25);color:#dc2626;white-space:nowrap">Video art</span>
+          </div>
+          <div style="padding:0 18px 20px;display:flex;flex-direction:column;gap:14px">
+            <sc-for list="{{ mobileCards }}" as="m" hint-placeholder-count="2">
+              <article style="background:#fff;border:1px solid rgba(15,23,42,.07);border-radius:12px;overflow:hidden;box-shadow:0 4px 24px rgba(0,0,0,.05)">
+                <div style="position:relative;height:150px;background:#111827">
+                  <image-slot id="{{ m.mobileSlotId }}" shape="rect" placeholder=""></image-slot>
+                  <div style="position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);pointer-events:none;width:44px;height:44px;border-radius:50%;background:rgba(255,255,255,.93);display:flex;align-items:center;justify-content:center">
+                    <svg width="17" height="17" viewBox="0 0 24 24" fill="{{ m.accent }}"><path d="M9 5.5v13l10-6.5z"></path></svg>
+                  </div>
+                  <span style="position:absolute;left:0;right:0;top:calc(50% + 30px);text-align:center;pointer-events:none;font:700 9px 'DM Sans';letter-spacing:.12em;color:rgba(255,255,255,.55)">DROP A FRAME</span>
+                  <span style="position:absolute;right:9px;bottom:9px;pointer-events:none;background:rgba(15,23,42,.8);color:#fff;border-radius:5px;padding:2px 7px;font:500 10.5px ui-monospace,Menlo,monospace">{{ m.dur }}</span>
+                </div>
+                <div style="padding:13px 14px 15px">
+                  <span style="font:700 10.5px 'DM Sans';padding:3px 8px;border-radius:999px;white-space:nowrap;background:{{ m.tagBg }};color:{{ m.accent }}">{{ m.kindLabel }}</span>
+                  <h3 style="font:700 16px/1.3 'Syne',serif;color:#0f172a;margin:9px 0 5px">{{ m.title }}</h3>
+                  <p style="font:400 12.5px/1.5 'DM Sans';color:#475569;margin:0">{{ m.desc }}</p>
+                </div>
+              </article>
+            </sc-for>
+          </div>
+        </div>
+
+        <div style="width:390px;border-radius:34px;border:9px solid #0f172a;overflow:hidden;background:#0f172a;box-shadow:0 12px 32px rgba(15,23,42,.18);position:relative;height:720px">
+          <div style="opacity:.32;filter:blur(1px)">
+            <div style="display:flex;justify-content:space-between;padding:9px 20px 5px;font:700 11.5px 'DM Sans';color:#fff"><span>9:41</span><span>▮▮▮ ⌁</span></div>
+            <div style="padding:16px 18px"><div style="height:130px;border-radius:12px;background:#334155;margin-bottom:12px"></div><div style="height:130px;border-radius:12px;background:#334155"></div></div>
+          </div>
+          <div style="position:absolute;left:0;right:0;bottom:0;background:#f8f9fb;border-radius:22px 22px 0 0;padding:14px 18px 26px">
+            <div style="width:38px;height:4px;border-radius:999px;background:rgba(15,23,42,.2);margin:0 auto 16px"></div>
+            <div style="font:700 19px 'Syne',serif;color:#0f172a;margin-bottom:4px">Add to portfolio</div>
+            <p style="font:400 12.5px/1.5 'DM Sans';color:#475569;margin:0 0 16px">Upload a video, then write it up.</p>
+            <div style="border:2px dashed rgba(37,99,235,.35);background:rgba(37,99,235,.05);border-radius:12px;padding:26px 16px;text-align:center;margin-bottom:12px">
+              <div style="width:46px;height:46px;margin:0 auto 11px;border-radius:13px;background:#fff;border:1px solid rgba(15,23,42,.1);display:flex;align-items:center;justify-content:center">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#2563eb" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2.5" y="5.5" width="13" height="13" rx="2.5"></rect><path d="M15.5 10.5l6-3.4v9.8l-6-3.4z"></path></svg>
+              </div>
+              <div style="font:700 14.5px 'DM Sans';color:#0f172a">Record or choose a video</div>
+              <div style="font:400 12px 'DM Sans';color:#64748b;margin-top:3px">MP4, MOV · up to 2 GB</div>
+            </div>
+            <div style="display:flex;flex-direction:column;gap:9px;margin-bottom:16px">
+              <div style="border:1px solid rgba(15,23,42,.18);border-radius:10px;padding:11px 12px;background:#fff;font:400 13.5px 'DM Sans';color:#94a3b8">Project title</div>
+              <div style="border:1px solid rgba(15,23,42,.18);border-radius:10px;padding:11px 12px;background:#fff;font:400 13.5px/1.5 'DM Sans';color:#94a3b8;height:66px">What you built, and why…</div>
+            </div>
+            <div style="display:flex;gap:8px">
+              <span style="flex:1;text-align:center;background:#2563eb;color:#fff;border-radius:10px;padding:13px 0;font:700 14px 'DM Sans'">Continue</span>
+              <span style="text-align:center;background:#fff;border:1px solid rgba(15,23,42,.18);color:#0f172a;border-radius:10px;padding:13px 18px;font:700 14px 'DM Sans'">Draft</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <p style="margin:26px 0 0;font:400 12px/1.5 'DM Sans',sans-serif;color:#64748b">
+    Try next: "build out <a href="#1b">1b</a> as the real Work page" · "add the transcoding/failure states to <a href="#1c">1c</a>" · "make the video-art track feel more distinct"
+  </p>
+</section>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1420,&quot;height&quot;:1000}}">
+const PROJECTS = [
+  { id: "gns3", kind: "eng", title: "GNS3 Industrial Network", desc: "Multi-site OT/IT topology with segmented VLANs, a historian DMZ, and simulated Modbus traffic.", tags: ["GNS3", "OT security"], dur: "06:24" },
+  { id: "scada", kind: "eng", title: "SCADA Hardening Blueprint", desc: "Defence-in-depth for RTUs and supervisory control, aligned to IEC 62443.", tags: ["Cybersecurity", "ICS"], dur: "04:02" },
+  { id: "bgp", kind: "eng", title: "OSPF / BGP Failover Lab", desc: "Dual-stack routing across two sites with traffic engineering and link-failure drills.", tags: ["Networking"], dur: "07:51" },
+  { id: "drift", kind: "art", title: "Drift Study No. 4", desc: "Latent interpolation across three coastline seeds, graded to 16mm stock.", tags: ["GenAI", "Loop"], dur: "01:12" },
+  { id: "refinery", kind: "art", title: "Refinery Dreams", desc: "Industrial photography fed back through an image-to-video model, frame by frame.", tags: ["GenAI", "Experiment"], dur: "02:37" },
+  { id: "telemetry", kind: "eng", title: "Pump Telemetry Pipeline", desc: "PLC telemetry ingestion with threshold alerting and Grafana dashboards.", tags: ["Automation"], dur: "03:18" }
+];
+
+class Component extends DCLogic {
+  state = { track: "all", hovered: null, row: "gns3", step: 0, pct: 0, dragging: false,
+    title: "GNS3 Industrial Network", desc: "A multi-site OT/IT topology simulating a pumping station and its corporate uplink." };
+
+  componentWillUnmount() { clearInterval(this._t); }
+
+  startUpload = () => {
+    this.setState({ step: 1, pct: 0 });
+    clearInterval(this._t);
+    this._t = setInterval(() => {
+      this.setState(s => {
+        const pct = Math.min(100, s.pct + 4);
+        if (pct >= 100) { clearInterval(this._t); setTimeout(() => this.setState({ step: 2 }), 450); }
+        return { pct };
+      });
+    }, 70);
+  };
+
+  renderVals() {
+    const { track, hovered, row, step, pct, dragging } = this.state;
+    const accentOf = k => (k === "art" ? "#dc2626" : "#2563eb");
+
+    const counts = { all: PROJECTS.length, eng: PROJECTS.filter(p => p.kind === "eng").length, art: PROJECTS.filter(p => p.kind === "art").length };
+    const tracks = [["all", "All work"], ["eng", "Engineering"], ["art", "Video art"]].map(([id, label]) => {
+      const on = track === id;
+      const c = id === "art" ? "#dc2626" : "#2563eb";
+      return { id, label, count: counts[id], onClick: () => this.setState({ track: id }),
+        bg: on ? c : "#fff", fg: on ? "#fff" : "#475569", bd: on ? c : "rgba(15,23,42,.15)" };
+    });
+
+    const shown = PROJECTS.filter(p => track === "all" || p.kind === track).map(p => {
+      const hot = hovered === p.id;
+      return { ...p, slotId: "grid-" + p.id, accent: accentOf(p.kind),
+        tagBg: p.kind === "art" ? "rgba(220,38,38,.12)" : "rgba(37,99,235,.12)",
+        scrim: hot ? "linear-gradient(180deg,rgba(15,23,42,.06),rgba(15,23,42,.38))" : "linear-gradient(180deg,transparent 55%,rgba(15,23,42,.3))",
+        playScale: hot ? "1.18" : "1",
+        shadow: hot ? "0 12px 32px rgba(15,23,42,.15)" : "0 4px 24px rgba(0,0,0,.07)",
+        lift: hot ? "translateY(-4px)" : "translateY(0)",
+        onEnter: () => this.setState({ hovered: p.id }),
+        onLeave: () => this.setState({ hovered: null }) };
+    });
+
+    const indexRows = PROJECTS.map((p, i) => ({
+      num: String(i + 1).padStart(2, "0"), title: p.title,
+      kindLabel: p.kind === "art" ? "VIDEO ART" : "ENGINEERING",
+      accent: p.kind === "art" ? "#f87171" : "#60a5fa",
+      fg: row === p.id ? "#fff" : "#cbd5e1",
+      rowBg: row === p.id ? "rgba(255,255,255,.06)" : "transparent",
+      onEnter: () => this.setState({ row: p.id })
+    }));
+    const cur = PROJECTS.find(p => p.id === row) || PROJECTS[0];
+
+    const labels = ["DROP", "UPLOAD", "DETAILS", "LIVE"];
+    const steps = labels.map((label, i) => ({ label,
+      bg: i === step ? "#2563eb" : i < step ? "rgba(37,99,235,.12)" : "rgba(15,23,42,.06)",
+      fg: i === step ? "#fff" : i < step ? "#2563eb" : "#94a3b8" }));
+
+    return {
+      tracks, shown, indexRows, steps,
+      previewSlotId: "idx-" + cur.id, previewAccent: accentOf(cur.kind),
+      previewTitle: cur.title, previewDesc: cur.desc, previewTags: cur.tags, previewDur: cur.dur,
+      isDrop: step === 0, isUploading: step === 1, isDetails: step === 2, isDone: step === 3,
+      dropBd: dragging ? "#2563eb" : "rgba(37,99,235,.35)",
+      dropBg: dragging ? "rgba(37,99,235,.09)" : "rgba(37,99,235,.04)",
+      dropTitle: dragging ? "Release to upload" : "Drop a video here",
+      dragOn: () => this.setState({ dragging: true }),
+      dragOff: () => this.setState({ dragging: false }),
+      startUpload: this.startUpload,
+      pct, pctLabel: pct + "%",
+      phase: pct < 70 ? "Uploading…" : pct < 100 ? "Transcoding to 1080p…" : "Finishing up…",
+      title: this.state.title, desc: this.state.desc,
+      onTitle: e => this.setState({ title: e.target.value }),
+      onDesc: e => this.setState({ desc: e.target.value }),
+      publish: () => this.setState({ step: 3 }),
+      reset: () => this.setState({ step: 0, pct: 0, dragging: false }),
+      mobileCards: [PROJECTS[0], PROJECTS[3]].map(p => ({ ...p,
+        mobileSlotId: "mob-" + p.id, accent: accentOf(p.kind),
+        tagBg: p.kind === "art" ? "rgba(220,38,38,.12)" : "rgba(37,99,235,.12)",
+        kindLabel: p.kind === "art" ? "Video art" : "Engineering" }))
+    };
+  }
+}
+</script>
+</body>
+</html>
