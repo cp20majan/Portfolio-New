@@ -71,6 +71,26 @@
   overflow: hidden;
 }
 
+.doorImageUpload {
+  position: absolute;
+  right: 10px;
+  top: 10px;
+}
+
+.doorImageUploadBtn {
+  border: 1px solid rgba(244, 242, 236, 0.6);
+  background: rgba(23, 22, 15, 0.72);
+  color: var(--panel);
+  padding: 7px 12px;
+  font: 700 9.5px 'JetBrains Mono', monospace;
+  letter-spacing: 0.1em;
+  cursor: pointer;
+}
+
+.doorImageUploadBtn:hover {
+  background: var(--ink);
+}
+
 .doorChip {
   position: absolute;
   left: 0;

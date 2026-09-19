@@ -46,6 +46,13 @@ export const api = {
 
   adminStats: () => request('/admin/stats'),
 
+  getSiteAssets: () => request('/assets'),
+  uploadSiteAsset: (key, file) => {
+    const form = new FormData();
+    form.append('image', file);
+    return request(`/assets/${key}`, { method: 'POST', body: form });
+  },
+
   uploadVideo: (entryId, file, onProgress) =>
     new Promise((resolve, reject) => {
       const form = new FormData();

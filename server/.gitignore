@@ -4,8 +4,10 @@ uploads/tmp/*
 uploads/video/*
 uploads/poster/*
 uploads/files/*
+uploads/assets/*
 !uploads/tmp/.gitkeep
 !uploads/video/.gitkeep
 !uploads/poster/.gitkeep
 !uploads/files/.gitkeep
+!uploads/assets/.gitkeep
 .env

@@ -7,6 +7,7 @@ import { authRouter } from './routes/auth.js';
 import { entriesRouter } from './routes/entries.js';
 import { uploadRouter } from './routes/upload.js';
 import { adminRouter } from './routes/admin.js';
+import { assetsRouter } from './routes/assets.js';
 import './db/index.js';
 
 const app = express();
@@ -20,6 +21,7 @@ app.use('/api/auth', authRouter);
 app.use('/api/entries', entriesRouter);
 app.use('/api', uploadRouter);
 app.use('/api/admin', adminRouter);
+app.use('/api/assets', assetsRouter);
 
 app.get('/api/health', (req, res) => res.json({ ok: true }));
 

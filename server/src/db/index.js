@@ -38,6 +38,12 @@ CREATE TABLE IF NOT EXISTS entries (
   updated_at TEXT NOT NULL DEFAULT (datetime('now'))
 );
 
+CREATE TABLE IF NOT EXISTS site_assets (
+  key TEXT PRIMARY KEY,
+  image_path TEXT NOT NULL,
+  updated_at TEXT NOT NULL DEFAULT (datetime('now'))
+);
+
 CREATE TABLE IF NOT EXISTS upload_jobs (
   id TEXT PRIMARY KEY,
   entry_id TEXT NOT NULL REFERENCES entries(id) ON DELETE CASCADE,

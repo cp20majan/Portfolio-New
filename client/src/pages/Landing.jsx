@@ -1,16 +1,62 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { api } from '../api/client';
+import { useAuth } from '../context/AuthContext';
 import ImageSlot from '../components/ImageSlot';
 import Footer from '../components/Footer';
 import styles from './Landing.module.css';
 
+function DoorImageUpload({ assetKey, onUploaded }) {
+  const inputRef = useRef(null);
+  const [busy, setBusy] = useState(false);
+
+  const handleChange = async (e) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    setBusy(true);
+    try {
+      const { url } = await api.uploadSiteAsset(assetKey, file);
+      onUploaded(url);
+    } catch (err) {
+      alert(err.message);
+    } finally {
+      setBusy(false);
+    }
+  };
+
+  return (
+    <div className={styles.doorImageUpload}>
+      <input
+        ref={inputRef}
+        type="file"
+        accept="image/jpeg,image/png,image/webp"
+        hidden
+        onChange={handleChange}
+      />
+      <button
+        type="button"
+        className={styles.doorImageUploadBtn}
+        onClick={(e) => {
+          e.preventDefault();
+          e.stopPropagation();
+          inputRef.current?.click();
+        }}
+      >
+        {busy ? 'UPLOADING…' : 'UPLOAD IMAGE'}
+      </button>
+    </div>
+  );
+}
+
 export default function Landing() {
+  const { isAdmin } = useAuth();
   const [counts, setCounts] = useState({ work: null, lab: null });
+  const [assets, setAssets] = useState({});
 
   useEffect(() => {
     api.listEntries('work').then((rows) => setCounts((c) => ({ ...c, work: rows.length }))).catch(() => {});
     api.listEntries('lab').then((rows) => setCounts((c) => ({ ...c, lab: rows.length }))).catch(() => {});
+    api.getSiteAssets().then(setAssets).catch(() => {});
   }, []);
 
   return (
@@ -30,8 +76,14 @@ export default function Landing() {
       <div className={styles.doors}>
         <Link to="/work" className={styles.door}>
           <div className={styles.doorFrame}>
-            <ImageSlot />
+            <ImageSlot src={assets['door-work']} />
             <div className={styles.doorChip} style={{ background: 'var(--ink)' }}>01 / ACADEMIC</div>
+            {isAdmin && (
+              <DoorImageUpload
+                assetKey="door-work"
+                onUploaded={(url) => setAssets((a) => ({ ...a, 'door-work': url }))}
+              />
+            )}
           </div>
           <div className={styles.doorBody}>
             <div className={styles.doorHead}>
@@ -50,8 +102,14 @@ export default function Landing() {
 
         <Link to="/lab" className={styles.door}>
           <div className={styles.doorFrame}>
-            <ImageSlot />
+            <ImageSlot src={assets['door-lab']} />
             <div className={styles.doorChip} style={{ background: 'var(--accent-text)' }}>02 / GENERATIVE</div>
+            {isAdmin && (
+              <DoorImageUpload
+                assetKey="door-lab"
+                onUploaded={(url) => setAssets((a) => ({ ...a, 'door-lab': url }))}
+              />
+            )}
           </div>
           <div className={styles.doorBody}>
             <div className={styles.doorHead}>
