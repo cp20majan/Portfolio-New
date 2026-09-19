@@ -71,7 +71,7 @@ export default function Entry() {
         <p className={styles.desc}>{entry.description}</p>
       </div>
 
-      <div className={styles.hero}>
+      <div className={entry.videoUrl ? styles.heroVideo : styles.hero}>
         {entry.videoUrl ? (
           <video
             ref={videoRef}
