@@ -1,0 +1,64 @@
+:root {
+  --paper: #e6e3da;
+  --panel: #f4f2ec;
+  --ink: #17160f;
+  --muted: #6e6b60;
+  --muted2: #5f5c52;
+  --muted-dark: #a8a49a;
+  --line: rgba(23, 22, 15, 0.16);
+  --line-soft: rgba(23, 22, 15, 0.1);
+  --line-mid: rgba(23, 22, 15, 0.14);
+  --line-strong: rgba(23, 22, 15, 0.22);
+  --line-strongest: rgba(23, 22, 15, 0.25);
+  --accent: #dd4327;
+  --accent-text: #b8331c;
+  --accent-hover: #8f2614;
+  --slot-bg: #e3e0d6;
+  --card-cream: #fffdf8;
+  --stripe-a: #e0ddd3;
+  --stripe-b: #e8e5db;
+
+  --font-display: 'Instrument Serif', Georgia, serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, monospace;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--font-mono);
+  -webkit-font-smoothing: antialiased;
+}
+
+a {
+  color: var(--accent-text);
+  text-decoration: none;
+}
+
+a:hover {
+  color: var(--accent-hover);
+}
+
+button {
+  font-family: inherit;
+}
+
+#root {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+input,
+textarea {
+  font-family: inherit;
+}

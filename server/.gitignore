@@ -1,0 +1,11 @@
+node_modules/
+data/
+uploads/tmp/*
+uploads/video/*
+uploads/poster/*
+uploads/files/*
+!uploads/tmp/.gitkeep
+!uploads/video/.gitkeep
+!uploads/poster/.gitkeep
+!uploads/files/.gitkeep
+.env

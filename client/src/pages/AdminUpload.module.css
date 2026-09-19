@@ -1,0 +1,398 @@
+.wrap {
+  padding: 26px 24px 34px;
+  background: var(--panel);
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.eyebrow {
+  font: 500 10px 'JetBrains Mono', monospace;
+  letter-spacing: 0.2em;
+  color: var(--muted2);
+  margin-bottom: 8px;
+}
+
+.h1 {
+  font: 400 40px 'Instrument Serif', serif;
+  color: var(--ink);
+  margin: 0;
+}
+
+.steps {
+  display: flex;
+  gap: 1px;
+  background: var(--line);
+  border: 1px solid var(--line);
+}
+
+.stepActive,
+.stepDone,
+.stepPending {
+  font: 700 9.5px 'JetBrains Mono', monospace;
+  letter-spacing: 0.1em;
+  padding: 6px 12px;
+  white-space: nowrap;
+}
+
+.stepActive {
+  background: var(--ink);
+  color: var(--panel);
+}
+
+.stepDone {
+  background: var(--panel);
+  color: var(--accent-text);
+}
+
+.stepPending {
+  background: var(--panel);
+  color: var(--muted2);
+}
+
+.error {
+  border: 1px solid var(--accent-text);
+  color: var(--accent-text);
+  padding: 10px 14px;
+  font: 400 11px/1.6 'JetBrains Mono', monospace;
+  margin-bottom: 16px;
+}
+
+.drop {
+  position: relative;
+  border: 1px dashed rgba(221, 67, 39, 0.45);
+  background: transparent;
+  padding: 66px 24px;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.18s ease;
+}
+
+.dropActive {
+  border-color: var(--accent);
+  background: rgba(221, 67, 39, 0.07);
+}
+
+.dropTitle {
+  font: 400 40px 'Instrument Serif', serif;
+  color: var(--ink);
+  margin-bottom: 8px;
+}
+
+.dropHint {
+  font: 400 10.5px/1.9 'JetBrains Mono', monospace;
+  letter-spacing: 0.06em;
+  color: var(--muted);
+  margin: 0 0 18px;
+}
+
+.browseBtn {
+  display: inline-block;
+  background: var(--ink);
+  color: var(--panel);
+  padding: 11px 22px;
+  font: 700 10.5px 'JetBrains Mono', monospace;
+  letter-spacing: 0.1em;
+}
+
+.uploading {
+  border: 1px solid var(--line);
+  background: var(--card-cream);
+}
+
+.uploadingTop {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+  padding: 20px;
+}
+
+.uploadingThumb {
+  position: relative;
+  width: 128px;
+  height: 72px;
+  flex: none;
+  background: repeating-linear-gradient(90deg, var(--stripe-a) 0 3px, var(--stripe-b) 3px 6px);
+  border: 1px solid var(--line-mid);
+}
+
+.playBadge {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 28px;
+  height: 28px;
+  background: var(--ink);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.uploadingInfo {
+  flex: 1;
+  min-width: 0;
+}
+
+.uploadingName {
+  font: 700 13px 'JetBrains Mono', monospace;
+  color: var(--ink);
+  margin-bottom: 6px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.uploadingMeta {
+  font: 400 10.5px 'JetBrains Mono', monospace;
+  color: var(--muted2);
+}
+
+.pctLabel {
+  font: 400 40px 'Instrument Serif', serif;
+  color: var(--accent-text);
+}
+
+.progressTrack {
+  height: 3px;
+  background: var(--line-mid);
+}
+
+.progressFill {
+  height: 100%;
+  background: var(--accent);
+  transition: width 0.18s linear;
+}
+
+.uploadingFoot {
+  display: flex;
+  justify-content: space-between;
+  padding: 12px 20px;
+  font: 500 10px 'JetBrains Mono', monospace;
+  letter-spacing: 0.08em;
+  color: var(--muted2);
+}
+
+.phase {
+  color: var(--accent-text);
+}
+
+.details {
+  display: grid;
+  grid-template-columns: 220px 1fr;
+  gap: 22px;
+  align-items: start;
+}
+
+@media (max-width: 700px) {
+  .details {
+    grid-template-columns: 1fr;
+  }
+}
+
+.posterFrame {
+  position: relative;
+  height: 130px;
+  background: var(--slot-bg);
+  border: 1px solid var(--line-mid);
+}
+
+.candidates {
+  display: flex;
+  gap: 1px;
+  margin-top: 1px;
+  background: var(--line-mid);
+}
+
+.candidate {
+  flex: 1;
+  height: 38px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font: 500 9px 'JetBrains Mono', monospace;
+  color: var(--muted2);
+  background-size: cover;
+  background-position: center;
+  border: 0;
+  cursor: pointer;
+  position: relative;
+}
+
+.candidate::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: rgba(244, 242, 236, 0.55);
+}
+
+.candidate span,
+.candidate {
+  z-index: 1;
+}
+
+.candidateActive {
+  outline: 1px solid var(--accent);
+  outline-offset: -1px;
+  color: var(--accent-text);
+}
+
+.posterHint {
+  font: 400 9.5px 'JetBrains Mono', monospace;
+  letter-spacing: 0.12em;
+  color: var(--muted2);
+  margin-top: 9px;
+}
+
+.reportRow {
+  margin-top: 16px;
+}
+
+.reportBtn {
+  width: 100%;
+  border: 1px dashed var(--line-strongest);
+  background: transparent;
+  color: var(--muted2);
+  padding: 10px 8px;
+  font: 700 9px 'JetBrains Mono', monospace;
+  letter-spacing: 0.08em;
+  cursor: pointer;
+}
+
+.field {
+  margin-bottom: 16px;
+}
+
+.label {
+  font: 500 9.5px 'JetBrains Mono', monospace;
+  letter-spacing: 0.14em;
+  color: var(--muted2);
+  display: block;
+  margin-bottom: 6px;
+}
+
+.titleInput {
+  width: 100%;
+  border: 0;
+  border-bottom: 1px solid var(--line-strongest);
+  background: transparent;
+  padding: 4px 0;
+  font: 400 27px 'Instrument Serif', serif;
+  color: var(--ink);
+  outline: none;
+}
+
+.textarea {
+  width: 100%;
+  border: 1px solid var(--line-strong);
+  background: var(--card-cream);
+  padding: 11px;
+  font: 400 11px/1.8 'JetBrains Mono', monospace;
+  color: var(--ink);
+  resize: vertical;
+  outline: none;
+}
+
+.rowFields {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-bottom: 18px;
+}
+
+.toggle {
+  display: flex;
+  gap: 1px;
+  background: var(--line);
+  border: 1px solid var(--line);
+}
+
+.toggleBtn {
+  flex: 1;
+  border: 0;
+  cursor: pointer;
+  padding: 10px 0;
+  font: 700 9.5px 'JetBrains Mono', monospace;
+  letter-spacing: 0.08em;
+  background: var(--panel);
+  color: var(--muted2);
+}
+
+.toggleBtnActiveWork {
+  background: var(--ink);
+  color: var(--panel);
+}
+
+.toggleBtnActiveLab {
+  background: var(--accent-text);
+  color: var(--panel);
+}
+
+.formActions {
+  display: flex;
+  gap: 8px;
+}
+
+.publishBtn {
+  background: var(--accent-text);
+  color: var(--panel);
+  border: 0;
+  padding: 12px 22px;
+  font: 700 10.5px 'JetBrains Mono', monospace;
+  letter-spacing: 0.1em;
+  cursor: pointer;
+}
+
+.publishBtn:disabled {
+  opacity: 0.6;
+}
+
+.draftBtn {
+  background: transparent;
+  border: 1px solid var(--line-strongest);
+  color: var(--ink);
+  padding: 12px 22px;
+  font: 700 10.5px 'JetBrains Mono', monospace;
+  letter-spacing: 0.1em;
+  cursor: pointer;
+}
+
+.done {
+  padding: 50px 20px;
+  text-align: center;
+  border: 1px solid var(--line);
+}
+
+.doneIcon {
+  width: 44px;
+  height: 44px;
+  margin: 0 auto 16px;
+  background: var(--ink);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.doneTitle {
+  font: 400 38px 'Instrument Serif', serif;
+  color: var(--ink);
+  margin-bottom: 8px;
+}
+
+.doneSub {
+  font: 400 10.5px/1.8 'JetBrains Mono', monospace;
+  color: var(--muted);
+  margin: 0 0 20px;
+}
+
+.doneActions {
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+}

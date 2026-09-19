@@ -1,0 +1,119 @@
+.adminBar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: var(--ink);
+  padding: 9px 24px;
+}
+
+.adminBarLabel {
+  font: 500 10px 'JetBrains Mono', monospace;
+  letter-spacing: 0.16em;
+  color: var(--muted-dark);
+}
+
+.adminBarActions {
+  display: flex;
+  gap: 18px;
+  align-items: center;
+  font: 500 10px 'JetBrains Mono', monospace;
+  letter-spacing: 0.12em;
+  color: var(--panel);
+}
+
+.adminBarBtn,
+.adminBarSignOut {
+  border: 1px solid rgba(244, 242, 236, 0.35);
+  background: transparent;
+  color: var(--panel);
+  padding: 5px 11px;
+  font: 500 9.5px 'JetBrains Mono', monospace;
+  letter-spacing: 0.12em;
+  cursor: pointer;
+}
+
+.adminBarNew {
+  border: 1px solid var(--accent-text);
+  background: var(--accent-text);
+  color: var(--panel);
+  padding: 5px 11px;
+  font: 700 9.5px 'JetBrains Mono', monospace;
+  letter-spacing: 0.12em;
+  cursor: pointer;
+}
+
+.mainNav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 18px 24px;
+  border-bottom: 1px solid var(--line);
+  background: var(--panel);
+}
+
+.logo {
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+  font: 400 24px 'Instrument Serif', serif;
+  color: var(--ink);
+  padding: 0;
+}
+
+.logo:hover {
+  color: var(--ink);
+}
+
+.links {
+  display: flex;
+  gap: 22px;
+  align-items: baseline;
+}
+
+.navLink {
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+  font: 500 11px 'JetBrains Mono', monospace;
+  letter-spacing: 0.1em;
+  color: var(--muted);
+  border-bottom: 2px solid transparent;
+  padding: 0 0 3px;
+}
+
+.navLinkActive {
+  color: var(--ink);
+  border-bottom-color: var(--ink);
+}
+
+.labLinkActive {
+  color: var(--ink);
+  border-bottom-color: var(--accent);
+}
+
+.contact {
+  font: 500 11px 'JetBrains Mono', monospace;
+  letter-spacing: 0.1em;
+  color: var(--muted);
+}
+
+.contact:hover {
+  color: var(--ink);
+}
+
+.signIn {
+  border: 0;
+  border-bottom: 1px solid rgba(23, 22, 15, 0.3);
+  background: transparent;
+  cursor: pointer;
+  font: 500 10.5px 'JetBrains Mono', monospace;
+  letter-spacing: 0.1em;
+  color: var(--muted);
+  padding: 0 0 2px;
+}
+
+.adminBadge {
+  font: 700 9.5px 'JetBrains Mono', monospace;
+  letter-spacing: 0.12em;
+  color: var(--accent-text);
+}

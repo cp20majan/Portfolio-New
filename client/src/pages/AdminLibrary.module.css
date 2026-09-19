@@ -1,0 +1,218 @@
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  padding: 34px 24px 22px;
+  border-bottom: 1px solid var(--line);
+  flex-wrap: wrap;
+  gap: 16px;
+  background: var(--panel);
+}
+
+.eyebrow {
+  font: 500 10px 'JetBrains Mono', monospace;
+  letter-spacing: 0.2em;
+  color: var(--muted2);
+  margin-bottom: 10px;
+}
+
+.h1 {
+  font: 400 48px 'Instrument Serif', serif;
+  color: var(--ink);
+  margin: 0;
+}
+
+.actions {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.filterBtn {
+  flex: none;
+  white-space: nowrap;
+  border: 1px solid var(--line-strongest);
+  background: transparent;
+  color: var(--muted);
+  padding: 8px 13px;
+  font: 700 9.5px 'JetBrains Mono', monospace;
+  letter-spacing: 0.1em;
+  cursor: pointer;
+}
+
+.filterBtnActive {
+  border-color: var(--ink);
+  background: var(--ink);
+  color: var(--panel);
+}
+
+.filterCount {
+  opacity: 0.55;
+  font-weight: 400;
+}
+
+.newBtn {
+  border: 0;
+  background: var(--accent-text);
+  color: var(--panel);
+  padding: 9px 14px;
+  font: 700 9.5px 'JetBrains Mono', monospace;
+  letter-spacing: 0.1em;
+  cursor: pointer;
+}
+
+.newBtn:hover {
+  color: var(--panel);
+}
+
+.tableHead {
+  display: grid;
+  grid-template-columns: 150px 1fr 120px 150px 120px 190px;
+  gap: 18px;
+  padding: 12px 24px;
+  border-bottom: 1px solid var(--line);
+  font: 500 9.5px 'JetBrains Mono', monospace;
+  letter-spacing: 0.14em;
+  color: var(--muted2);
+}
+
+.row {
+  display: grid;
+  grid-template-columns: 150px 1fr 120px 150px 120px 190px;
+  gap: 18px;
+  align-items: center;
+  padding: 14px 24px;
+  border-bottom: 1px solid var(--line-soft);
+  background: var(--panel);
+}
+
+.rowDraft {
+  background: #efece3;
+}
+
+@media (max-width: 900px) {
+  .tableHead {
+    display: none;
+  }
+  .row {
+    grid-template-columns: 80px 1fr;
+    grid-template-areas: 'thumb title' 'thumb side' 'actions actions';
+  }
+  .updated {
+    display: none;
+  }
+}
+
+.thumb {
+  position: relative;
+  width: 110px;
+  height: 62px;
+  background: repeating-linear-gradient(90deg, var(--stripe-a) 0 3px, var(--stripe-b) 3px 6px);
+  border: 1px solid var(--line-mid);
+}
+
+.playBadge {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 20px;
+  height: 20px;
+  background: var(--ink);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.title {
+  font: 400 22px 'Instrument Serif', serif;
+  color: var(--ink);
+  margin-bottom: 3px;
+}
+
+.meta {
+  font: 400 10px 'JetBrains Mono', monospace;
+  color: var(--muted2);
+}
+
+.sideWork,
+.sideLab {
+  font: 700 9.5px 'JetBrains Mono', monospace;
+  letter-spacing: 0.12em;
+}
+
+.sideWork {
+  color: var(--ink);
+}
+
+.sideLab {
+  color: var(--accent-text);
+}
+
+.statusDraft,
+.statusPublished {
+  justify-self: start;
+  font: 700 9px 'JetBrains Mono', monospace;
+  letter-spacing: 0.12em;
+  padding: 5px 9px;
+}
+
+.statusDraft {
+  background: var(--accent-text);
+  color: var(--panel);
+}
+
+.statusPublished {
+  color: var(--muted2);
+  background: transparent;
+}
+
+.updated {
+  font: 400 10.5px 'JetBrains Mono', monospace;
+  color: var(--muted2);
+}
+
+.rowActions {
+  display: flex;
+  gap: 6px;
+  justify-content: flex-end;
+}
+
+.actionBtn {
+  border: 1px solid var(--line-strong);
+  color: var(--ink);
+  background: transparent;
+  padding: 7px 11px;
+  font: 700 9px 'JetBrains Mono', monospace;
+  letter-spacing: 0.1em;
+  cursor: pointer;
+}
+
+.actionBtn:hover {
+  color: var(--ink);
+}
+
+.actionBtnFilled {
+  border: 1px solid var(--ink);
+  background: var(--ink);
+  color: var(--panel);
+  padding: 7px 11px;
+  font: 700 9px 'JetBrains Mono', monospace;
+  letter-spacing: 0.1em;
+  cursor: pointer;
+}
+
+.deleteBtn {
+  border: 1px solid var(--line-strong);
+  background: transparent;
+  color: var(--muted2);
+  padding: 7px 9px;
+  font: 700 9px 'JetBrains Mono', monospace;
+  cursor: pointer;
+}
+
+.footNote {
+  padding: 16px 24px;
+  font: 400 10.5px 'JetBrains Mono', monospace;
+  color: var(--muted2);
+}

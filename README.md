@@ -1,25 +1,71 @@
-# CODING AGENTS: READ THIS FIRST
+# CP Majan — Portfolio
 
-This is a **handoff bundle** from Claude Design (claude.ai/design).
+A two-track portfolio site (Work = academic/industrial networking, Lab = generative
+video) implementing the `Portfolio Mockups v4.dc.html` design exported from Claude
+Design (see `chats/chat1.md` for the design conversation, `project/` for the original
+mockup bundle).
 
-A user mocked up designs in HTML/CSS/JS using an AI design tool, then exported this bundle so a coding agent can implement the designs for real.
+- `client/` — React + Vite front end
+- `server/` — Express API: SQLite storage, admin auth, real video upload + ffmpeg
+  transcode + poster-frame extraction
 
-## What you should do — IMPORTANT
+## Requirements
 
-**Read the chat transcripts first.** There are 1 chat transcript(s) in `chats/`. The transcripts show the full back-and-forth between the user and the design assistant — they tell you **what the user actually wants** and **where they landed** after iterating. Don't skip them. The final HTML files are the output, but the chat is where the intent lives.
+- Node.js 20+
+- **ffmpeg and ffprobe on PATH** (used for real video transcoding and poster-frame
+  extraction — `apt-get install ffmpeg` on Debian/Ubuntu, `brew install ffmpeg` on
+  macOS)
 
-**Read `project/Portfolio Mockups v4.dc.html` in full.** The user had this file open when they triggered the handoff, so it's almost certainly the primary design they want built. Read it top to bottom — don't skim. Then **follow its imports**: open every file it pulls in (shared components, CSS, scripts) so you understand how the pieces fit together before you start implementing.
+## Setup
 
-**If anything is ambiguous, ask the user to confirm before you start implementing.** It's much cheaper to clarify scope up front than to build the wrong thing.
+```bash
+cd server
+npm install
+cp .env.example .env   # edit JWT_SECRET, ADMIN_EMAIL, ADMIN_PASSWORD_HASH
+npm run seed            # populates the two tracks with the content from the design chat
+npm run dev              # http://localhost:4000
 
-## About the design files
+cd ../client
+npm install
+npm run dev              # http://localhost:5173 (proxies /api and /uploads to :4000)
+```
 
-The design medium is **HTML/CSS/JS** — these are prototypes, not production code. Your job is to **recreate them pixel-perfectly** in whatever technology makes sense for the target codebase (React, Vue, native, whatever fits). Match the visual output; don't copy the prototype's internal structure unless it happens to fit.
+Without `ADMIN_PASSWORD_HASH` set, the server falls back to a dev-only password
+(`changeme`) so it boots out of the box — set a real hash before deploying:
 
-**Don't render these files in a browser or take screenshots unless the user asks you to.** Everything you need — dimensions, colors, layout rules — is spelled out in the source. Read the HTML and CSS directly; a screenshot won't tell you anything they don't.
+```bash
+node -e "console.log(require('bcryptjs').hashSync('your-password', 10))"
+```
 
-## Bundle contents
+## What's real vs. mocked
 
-- `README.md` — this file
-- `chats/` — conversation transcripts (read these!)
-- `project/` — the `Portfolio website mockups` project files (HTML prototypes, assets, components)
+Everything in the admin flow is a real, working feature, not a prototype fake:
+
+- Admin auth is a real bcrypt + JWT httpOnly-cookie session (single admin account).
+- Uploading a video runs it through actual `ffmpeg` — H.264/AAC transcode, real
+  progress reported back to the browser, and three real extracted poster-frame
+  candidates to choose from.
+- Publishing, unpublishing, editing and deleting entries persist to a real SQLite
+  database (`server/data/portfolio.sqlite`).
+- The public Work/Lab/Entry/About pages read live data from the API; nothing is
+  hardcoded in the front end.
+
+The only intentional placeholders are images/video for entries that haven't had
+media uploaded yet — those render as plain empty slots rather than fake content,
+per the project's design decision to ship without stock media.
+
+## Design fidelity notes
+
+The original mockup (`project/Portfolio Mockups v4.dc.html`) is a Claude Design
+prototype (`x-dc`/`sc-if`/`sc-for` custom elements, not portable markup) — this repo
+recreates its visual system (Instrument Serif + JetBrains Mono, paper/ink palette,
+vermilion accent, dark Lab masthead) in ordinary React + CSS rather than copying its
+internal structure, per the handoff `README.md`'s own instructions. A few small,
+deliberate deviations from the static mockup, made necessary by having a real
+backend instead of fake state:
+
+- The mockup's Visitor/Admin *preview toggle* is replaced by real sign-in/sign-out.
+- The Entry page's video area plays a real `<video>` element when footage exists
+  (with chapter markers that seek the video) instead of a static progress-bar graphic.
+- The mockup's two-still "stills" grid on the Entry page isn't backed by a schema
+  concept, so it was dropped rather than faked.

@@ -1,0 +1,74 @@
+.wrap {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 60px 24px;
+  background: var(--paper);
+}
+
+.card {
+  width: 100%;
+  max-width: 360px;
+  background: var(--panel);
+  border: 1px solid var(--line);
+  padding: 34px 30px;
+  display: flex;
+  flex-direction: column;
+}
+
+.eyebrow {
+  font: 500 10px 'JetBrains Mono', monospace;
+  letter-spacing: 0.2em;
+  color: var(--muted2);
+  margin-bottom: 8px;
+}
+
+.h1 {
+  font: 400 40px 'Instrument Serif', serif;
+  color: var(--ink);
+  margin: 0 0 24px;
+}
+
+.label {
+  font: 500 9.5px 'JetBrains Mono', monospace;
+  letter-spacing: 0.14em;
+  color: var(--muted2);
+  margin-bottom: 6px;
+}
+
+.input {
+  width: 100%;
+  border: 1px solid var(--line-strongest);
+  background: var(--card-cream);
+  padding: 11px;
+  font: 400 12px 'JetBrains Mono', monospace;
+  color: var(--ink);
+  margin-bottom: 16px;
+  outline: none;
+}
+
+.input:focus {
+  border-color: var(--accent);
+}
+
+.error {
+  font: 400 11px/1.6 'JetBrains Mono', monospace;
+  color: var(--accent-text);
+  margin-bottom: 14px;
+}
+
+.submit {
+  background: var(--accent-text);
+  color: var(--panel);
+  border: 0;
+  padding: 12px 22px;
+  font: 700 10.5px 'JetBrains Mono', monospace;
+  letter-spacing: 0.1em;
+  cursor: pointer;
+}
+
+.submit:disabled {
+  opacity: 0.6;
+  cursor: default;
+}
