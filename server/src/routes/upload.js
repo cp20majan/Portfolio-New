@@ -18,6 +18,7 @@ const filesDir = path.join(uploadsRoot, 'files');
 for (const dir of [tmpDir, videoDir, posterDir, filesDir]) fs.mkdirSync(dir, { recursive: true });
 
 const ALLOWED_VIDEO_TYPES = new Set(['video/mp4', 'video/quicktime', 'video/webm', 'video/x-matroska']);
+const ALLOWED_IMAGE_TYPES = new Set(['image/jpeg', 'image/png', 'image/webp']);
 
 const storage = multer.diskStorage({
   destination: (req, file, cb) => cb(null, tmpDir),
@@ -145,6 +146,40 @@ uploadRouter.post('/entries/:id/poster', requireAdmin, (req, res) => {
   db.prepare("UPDATE entries SET poster_path = ?, updated_at = datetime('now') WHERE id = ?").run(finalName, entry.id);
   const updated = db.prepare('SELECT * FROM entries WHERE id = ?').get(entry.id);
   res.json(serializeEntry(updated, { includeDraftFields: true }));
+});
+
+const thumbnailUpload = multer({
+  storage: multer.diskStorage({
+    destination: (req, file, cb) => cb(null, posterDir),
+    filename: (req, file, cb) => cb(null, `${req.params.id}-custom${path.extname(file.originalname).slice(0, 10) || '.jpg'}`),
+  }),
+  limits: { fileSize: 15 * 1024 * 1024 }, // 15 MB, plenty for a still image
+  fileFilter: (req, file, cb) => {
+    if (!ALLOWED_IMAGE_TYPES.has(file.mimetype)) {
+      return cb(new Error('Unsupported image type — use JPEG, PNG or WebP'));
+    }
+    cb(null, true);
+  },
+});
+
+uploadRouter.post('/entries/:id/thumbnail', requireAdmin, (req, res) => {
+  thumbnailUpload.single('thumbnail')(req, res, (err) => {
+    if (err) return res.status(400).json({ error: err.message });
+    const entry = db.prepare('SELECT * FROM entries WHERE id = ?').get(req.params.id);
+    if (!entry) {
+      if (req.file) fs.unlink(req.file.path, () => {});
+      return res.status(404).json({ error: 'Entry not found' });
+    }
+    if (!req.file) return res.status(400).json({ error: 'No image provided (field name: thumbnail)' });
+
+    if (entry.poster_path && entry.poster_path !== req.file.filename) {
+      fs.unlink(path.join(posterDir, entry.poster_path), () => {});
+    }
+    db.prepare("UPDATE entries SET poster_path = ?, updated_at = datetime('now') WHERE id = ?")
+      .run(req.file.filename, entry.id);
+    const updated = db.prepare('SELECT * FROM entries WHERE id = ?').get(entry.id);
+    res.json(serializeEntry(updated, { includeDraftFields: true }));
+  });
 });
 
 const reportUpload = multer({

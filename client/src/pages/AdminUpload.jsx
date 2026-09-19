@@ -10,6 +10,7 @@ export default function AdminUpload() {
   const navigate = useNavigate();
   const fileInputRef = useRef(null);
   const reportInputRef = useRef(null);
+  const thumbnailInputRef = useRef(null);
 
   const [step, setStep] = useState(0);
   const [dragging, setDragging] = useState(false);
@@ -19,6 +20,7 @@ export default function AdminUpload() {
   const [phase, setPhase] = useState('UPLOADING');
   const [posterCandidates, setPosterCandidates] = useState([]);
   const [posterIndex, setPosterIndex] = useState(null);
+  const [customThumbUrl, setCustomThumbUrl] = useState(null);
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
   const [side, setSide] = useState('work');
@@ -28,7 +30,7 @@ export default function AdminUpload() {
 
   const reset = () => {
     setStep(0); setEntry(null); setFileMeta(null); setPct(0); setPhase('UPLOADING');
-    setPosterCandidates([]); setPosterIndex(null); setTitle(''); setDescription('');
+    setPosterCandidates([]); setPosterIndex(null); setCustomThumbUrl(null); setTitle(''); setDescription('');
     setSide('work'); setVisibility('public'); setError(null);
   };
 
@@ -80,8 +82,21 @@ export default function AdminUpload() {
 
   const pickPoster = async (candidate) => {
     setPosterIndex(candidate.index);
+    setCustomThumbUrl(null);
     try {
       await api.selectPoster(entry.id, candidate.index);
+    } catch (err) {
+      setError(err.message);
+    }
+  };
+
+  const uploadThumbnail = async (file) => {
+    if (!file || !entry) return;
+    setError(null);
+    try {
+      const updated = await api.uploadThumbnail(entry.id, file);
+      setCustomThumbUrl(updated.posterUrl);
+      setPosterIndex(null);
     } catch (err) {
       setError(err.message);
     }
@@ -205,7 +220,7 @@ export default function AdminUpload() {
         <div className={styles.details}>
           <div className={styles.posterCol}>
             <div className={styles.posterFrame}>
-              <ImageSlot src={posterCandidates.find((c) => c.index === posterIndex)?.url} label="Pick a poster frame" />
+              <ImageSlot src={customThumbUrl || posterCandidates.find((c) => c.index === posterIndex)?.url} label="Pick a poster frame" />
             </div>
             <div className={styles.candidates}>
               {posterCandidates.map((c) => (
@@ -219,7 +234,15 @@ export default function AdminUpload() {
                 </button>
               ))}
             </div>
-            <div className={styles.posterHint}>SELECT POSTER FRAME</div>
+            <div className={styles.posterHint}>SELECT POSTER FRAME, OR UPLOAD YOUR OWN</div>
+
+            <div className={styles.reportRow}>
+              <input ref={thumbnailInputRef} type="file" accept="image/jpeg,image/png,image/webp" hidden
+                onChange={(e) => uploadThumbnail(e.target.files?.[0])} />
+              <button type="button" className={styles.reportBtn} onClick={() => thumbnailInputRef.current?.click()}>
+                UPLOAD THUMBNAIL IMAGE
+              </button>
+            </div>
 
             <div className={styles.reportRow}>
               <input ref={reportInputRef} type="file" accept="application/pdf" hidden

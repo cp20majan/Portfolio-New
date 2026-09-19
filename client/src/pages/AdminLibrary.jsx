@@ -72,7 +72,7 @@ export default function AdminLibrary() {
 
       {rows.map((row) => (
         <div key={row.id} className={`${styles.row} ${row.status === 'draft' ? styles.rowDraft : ''}`}>
-          <div className={styles.thumb}>
+          <div className={styles.thumb} style={row.posterUrl ? { background: `url(${row.posterUrl}) center/cover` } : undefined}>
             <div className={styles.playBadge}>
               <svg width="8" height="8" viewBox="0 0 24 24" fill="#f4f2ec"><path d="M9 5.5v13l10-6.5z" /></svg>
             </div>

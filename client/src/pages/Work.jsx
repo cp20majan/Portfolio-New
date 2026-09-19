@@ -48,7 +48,7 @@ export default function Work() {
 
       {(entries || []).map((p, i) => (
         <Link key={p.id} to={`/work/${p.id}`} className={styles.row}>
-          <div className={styles.thumb}>
+          <div className={styles.thumb} style={p.posterUrl ? { background: `url(${p.posterUrl}) center/cover` } : undefined}>
             <div className={styles.playBadge}>
               <svg width="9" height="9" viewBox="0 0 24 24" fill="#f4f2ec"><path d="M9 5.5v13l10-6.5z" /></svg>
             </div>

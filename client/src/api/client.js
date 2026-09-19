@@ -36,6 +36,12 @@ export const api = {
     return request(`/entries/${entryId}/report`, { method: 'POST', body: form });
   },
 
+  uploadThumbnail: (entryId, file) => {
+    const form = new FormData();
+    form.append('thumbnail', file);
+    return request(`/entries/${entryId}/thumbnail`, { method: 'POST', body: form });
+  },
+
   pollJob: (jobId) => request(`/jobs/${jobId}`),
 
   adminStats: () => request('/admin/stats'),

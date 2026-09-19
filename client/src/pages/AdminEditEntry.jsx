@@ -9,6 +9,7 @@ export default function AdminEditEntry() {
   const navigate = useNavigate();
   const videoInputRef = useRef(null);
   const reportInputRef = useRef(null);
+  const thumbnailInputRef = useRef(null);
 
   const [entry, setEntry] = useState(null);
   const [title, setTitle] = useState('');
@@ -109,6 +110,18 @@ export default function AdminEditEntry() {
     }
   };
 
+  const uploadThumbnail = async (file) => {
+    if (!file) return;
+    setError(null);
+    try {
+      const updated = await api.uploadThumbnail(id, file);
+      setEntry(updated);
+      setCandidates([]);
+    } catch (err) {
+      setError(err.message);
+    }
+  };
+
   const attachReport = async (file) => {
     if (!file) return;
     try {
@@ -137,6 +150,12 @@ export default function AdminEditEntry() {
             <ImageSlot src={entry.posterUrl} label="No poster yet" />
           </div>
 
+          <input ref={thumbnailInputRef} type="file" accept="image/jpeg,image/png,image/webp" hidden
+            onChange={(e) => uploadThumbnail(e.target.files?.[0])} />
+          <button className={styles.secondaryBtn} onClick={() => thumbnailInputRef.current?.click()}>
+            UPLOAD THUMBNAIL IMAGE
+          </button>
+
           {uploadPct !== null ? (
             <div className={styles.progressBox}>
               <div className={styles.progressTrack}><div className={styles.progressFill} style={{ width: `${uploadPct}%` }} /></div>
@@ -153,7 +172,7 @@ export default function AdminEditEntry() {
           )}
 
           {entry.videoUrl && candidates.length === 0 && (
-            <button className={styles.secondaryBtn} onClick={regenerateCandidates}>CHOOSE NEW POSTER FRAME</button>
+            <button className={styles.secondaryBtn} onClick={regenerateCandidates}>PICK FRAME FROM VIDEO</button>
           )}
 
           {candidates.length > 0 && (
