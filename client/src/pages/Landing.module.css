@@ -45,6 +45,10 @@
   }
 }
 
+.doorWrap {
+  position: relative;
+}
+
 .door {
   border: 0;
   cursor: pointer;

@@ -6,6 +6,9 @@ import ImageSlot from '../components/ImageSlot';
 import Footer from '../components/Footer';
 import styles from './Landing.module.css';
 
+// Rendered as a sibling of the door's <Link>, never nested inside it — an <input type=file>
+// nested inside an <a> still fires a real click event that bubbles to the anchor and
+// navigates, even after calling click() from an already-prevented handler.
 function DoorImageUpload({ assetKey, onUploaded }) {
   const inputRef = useRef(null);
   const [busy, setBusy] = useState(false);
@@ -36,11 +39,7 @@ function DoorImageUpload({ assetKey, onUploaded }) {
       <button
         type="button"
         className={styles.doorImageUploadBtn}
-        onClick={(e) => {
-          e.preventDefault();
-          e.stopPropagation();
-          inputRef.current?.click();
-        }}
+        onClick={() => inputRef.current?.click()}
       >
         {busy ? 'UPLOADING…' : 'UPLOAD IMAGE'}
       </button>
@@ -74,57 +73,61 @@ export default function Landing() {
       </section>
 
       <div className={styles.doors}>
-        <Link to="/work" className={styles.door}>
-          <div className={styles.doorFrame}>
-            <ImageSlot src={assets['door-work']} />
-            <div className={styles.doorChip} style={{ background: 'var(--ink)' }}>01 / ACADEMIC</div>
-            {isAdmin && (
-              <DoorImageUpload
-                assetKey="door-work"
-                onUploaded={(url) => setAssets((a) => ({ ...a, 'door-work': url }))}
-              />
-            )}
-          </div>
-          <div className={styles.doorBody}>
-            <div className={styles.doorHead}>
-              <h2 className={styles.doorTitle}>Work</h2>
-              <span className={styles.doorCount}>{counts.work === null ? '···' : `${counts.work} ENTRIES`}</span>
+        <div className={styles.doorWrap}>
+          <Link to="/work" className={styles.door}>
+            <div className={styles.doorFrame}>
+              <ImageSlot src={assets['door-work']} />
+              <div className={styles.doorChip} style={{ background: 'var(--ink)' }}>01 / ACADEMIC</div>
             </div>
-            <p className={styles.doorBlurb}>
-              OT/IT network design, ICS security and industrial automation — coursework and lab
-              builds, each with a recorded walkthrough, project files and a written report.
-            </p>
-            <span className={styles.doorCta} style={{ color: 'var(--ink)', borderColor: 'var(--ink)' }}>
-              ENTER WORK <span className={styles.arrow}>&rarr;</span>
-            </span>
-          </div>
-        </Link>
+            <div className={styles.doorBody}>
+              <div className={styles.doorHead}>
+                <h2 className={styles.doorTitle}>Work</h2>
+                <span className={styles.doorCount}>{counts.work === null ? '···' : `${counts.work} ENTRIES`}</span>
+              </div>
+              <p className={styles.doorBlurb}>
+                OT/IT network design, ICS security and industrial automation — coursework and lab
+                builds, each with a recorded walkthrough, project files and a written report.
+              </p>
+              <span className={styles.doorCta} style={{ color: 'var(--ink)', borderColor: 'var(--ink)' }}>
+                ENTER WORK <span className={styles.arrow}>&rarr;</span>
+              </span>
+            </div>
+          </Link>
+          {isAdmin && (
+            <DoorImageUpload
+              assetKey="door-work"
+              onUploaded={(url) => setAssets((a) => ({ ...a, 'door-work': url }))}
+            />
+          )}
+        </div>
 
-        <Link to="/lab" className={styles.door}>
-          <div className={styles.doorFrame}>
-            <ImageSlot src={assets['door-lab']} />
-            <div className={styles.doorChip} style={{ background: 'var(--accent-text)' }}>02 / GENERATIVE</div>
-            {isAdmin && (
-              <DoorImageUpload
-                assetKey="door-lab"
-                onUploaded={(url) => setAssets((a) => ({ ...a, 'door-lab': url }))}
-              />
-            )}
-          </div>
-          <div className={styles.doorBody}>
-            <div className={styles.doorHead}>
-              <h2 className={styles.doorTitle}>Lab</h2>
-              <span className={styles.doorCount}>{counts.lab === null ? '···' : `${counts.lab} PIECES`}</span>
+        <div className={styles.doorWrap}>
+          <Link to="/lab" className={styles.door}>
+            <div className={styles.doorFrame}>
+              <ImageSlot src={assets['door-lab']} />
+              <div className={styles.doorChip} style={{ background: 'var(--accent-text)' }}>02 / GENERATIVE</div>
             </div>
-            <p className={styles.doorBlurb}>
-              Generative video experiments — image-to-video models, latent interpolation and loops,
-              posted with their seeds, prompts and model versions.
-            </p>
-            <span className={styles.doorCta} style={{ color: 'var(--accent-text)', borderColor: 'var(--accent-text)' }}>
-              ENTER LAB <span className={styles.arrow}>&rarr;</span>
-            </span>
-          </div>
-        </Link>
+            <div className={styles.doorBody}>
+              <div className={styles.doorHead}>
+                <h2 className={styles.doorTitle}>Lab</h2>
+                <span className={styles.doorCount}>{counts.lab === null ? '···' : `${counts.lab} PIECES`}</span>
+              </div>
+              <p className={styles.doorBlurb}>
+                Generative video experiments — image-to-video models, latent interpolation and loops,
+                posted with their seeds, prompts and model versions.
+              </p>
+              <span className={styles.doorCta} style={{ color: 'var(--accent-text)', borderColor: 'var(--accent-text)' }}>
+                ENTER LAB <span className={styles.arrow}>&rarr;</span>
+              </span>
+            </div>
+          </Link>
+          {isAdmin && (
+            <DoorImageUpload
+              assetKey="door-lab"
+              onUploaded={(url) => setAssets((a) => ({ ...a, 'door-lab': url }))}
+            />
+          )}
+        </div>
       </div>
 
       <Footer note="TWO TRACKS, KEPT APART" />
